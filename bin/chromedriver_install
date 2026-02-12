@@ -1,0 +1,19 @@
+#!/usr/bin/env bash
+# Script to install Chrome and matching chromedriver at the system level for Linux
+# This script is called by chromedriver_check when JS tests are detected
+
+set -euo pipefail
+
+sudo apt-get update -y
+
+CHROME_DRIVER_VERSION=128.0.6613.137
+CHROME_PATH="/usr/local/chrome"
+CHROMEDRIVER_PATH="/usr/local/chromedriver"
+sudo mkdir -p "$CHROME_PATH" "$CHROMEDRIVER_PATH"
+
+# Install Chrome and Chromedriver
+echo "y" | sudo npx @puppeteer/browsers install chrome@${CHROME_DRIVER_VERSION} --install-deps --path="$CHROME_PATH"
+echo "y" | sudo npx @puppeteer/browsers install chromedriver@${CHROME_DRIVER_VERSION} --path="$CHROMEDRIVER_PATH"
+
+sudo ln -sf ${CHROME_PATH}/linux-${CHROME_DRIVER_VERSION}/chrome-linux64/chrome /usr/local/bin/google-chrome
+sudo ln -sf ${CHROMEDRIVER_PATH}/linux-${CHROME_DRIVER_VERSION}/chromedriver-linux64/chromedriver /usr/local/bin/chromedriver
