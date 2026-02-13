@@ -12,4 +12,9 @@
 #
 class Ingredient < ApplicationRecord
  belongs_to :recipe, required: true, class_name: "Recipe", foreign_key: "recipe_id"
+
+ validates :name, presence: true
+ validates :amount, presence: true
+ validates :unit, presence: true
+ validates :recipe_id, presence: true
 end

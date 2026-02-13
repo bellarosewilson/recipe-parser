@@ -22,6 +22,7 @@ class User < ApplicationRecord
   # :confirmable, :lockable, :timeoutable, :trackable and :omniauthable
   devise :database_authenticatable, :registerable,
          :recoverable, :rememberable, :validatable
-         
- has_many  :recipes, class_name: "Recipe", foreign_key: "author_id", dependent: :destroy
+
+  has_many :recipes, class_name: "Recipe", foreign_key: "author_id", dependent: :destroy
+  validates :preferred_units, inclusion: { in: %w[metric imperial] }, allow_nil: true
 end

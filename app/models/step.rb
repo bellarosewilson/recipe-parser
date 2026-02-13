@@ -10,5 +10,12 @@
 #  recipe_id   :integer
 #
 class Step < ApplicationRecord
- belongs_to :recipe, required: true, class_name: "Recipe", foreign_key: "recipe_id"
+  belongs_to :recipe, required: true, class_name: "Recipe", foreign_key: "recipe_id"
+
+  validates :position, presence: true
+  validates :instruction, presence: true
+  validates :recipe_id, presence: true
+
+  # To keep steps in order on recipe card
+  default_scope { order(position: :asc) }
 end

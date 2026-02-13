@@ -10,8 +10,15 @@
 #  author_id  :integer
 #
 class Recipe < ApplicationRecord
- belongs_to :author, required: true, class_name: "User", foreign_key: "author_id"
- 
- has_many  :recipe_ingredients, class_name: "Ingredient", foreign_key: "recipe_id", dependent: :destroy
- has_many  :steps, class_name: "Step", foreign_key: "recipe_id", dependent: :destroy
+  belongs_to :author, required: true, class_name: "User", foreign_key: "author_id"
+
+  has_many :recipe_ingredients, class_name: "Ingredient", foreign_key: "recipe_id", dependent: :destroy
+  has_many :steps, class_name: "Step", foreign_key: "recipe_id", dependent: :destroy
+
+  validates :title, presence: true
+  validates :author_id, presence: true
+
+  # For User to be able to delete ingredeients/steps when editing/reviewing recipe
+  accepts_nested_attributes_for :recipe_ingredients, allow_destroy: true
+  accepts_nested_attributes_for :steps, allow_destroy: true
 end
