@@ -14,13 +14,17 @@ gem "bootsnap", require: false        # Faster boot times via caching
 gem "thruster", require: false        # HTTP caching/compression for Puma
 gem "tzinfo-data", platforms: %i[windows jruby] # Timezone data for Windows/JRuby
 gem "ransack"                         # Search and filtering
-gem "dotenv"                          # Load environment variables from .env
+gem "dotenv-rails"                    # Load environment variables from .env (updated for Rails 8)
 gem "http"                            # Simple HTTP client for APIs
 gem "rollbar"                         # Error tracking in production
 gem "appdev_support"                  # Learning helpers (nicer error messages, etc.)
 gem "ai-chat", "~> 0.5.4"             # AI::Chat integration via OpenAI APIs
-gem "carrierwave" # File upload and management
 gem "devise" # User authentication (sign up, sign in, etc.)
+gem "aws-sdk-s3", require: false  # AWS S3 integration for file uploads
+gem "mini_magick" # Image processing for uploaded files
+gem "httparty" # Simplified HTTP requests for API interactions
+gem "image_processing" # High-level image processing interface
+gem "tailwindcss-rails", "~> 3.3.1" # Tailwind CSS integration for Rails, pinning old versiion for compatibility with Rails 8
 
 group :development, :test do
   gem "debug", platforms: %i[mri windows], require: "debug/prelude" # Ruby debugger
