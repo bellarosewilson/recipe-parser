@@ -1,6 +1,5 @@
 Rails.application.routes.draw do
-  get "pages/home"
-  get("/", { :controller => "pages", :action => "home" })
+ get("/", { :controller => "pages", :action => "home" })
 
   #Devise routes for User authentication
   devise_for :users
