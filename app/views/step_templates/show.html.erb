@@ -1,0 +1,96 @@
+<h1>
+  Step #<%= @the_step.id %> details
+</h1>
+
+<article>
+  <div>
+    <a href="/steps">
+      Go back
+    </a>
+  </div>
+
+  <div>
+    <a href="/delete_step/<%= @the_step.id %>">
+      Delete step
+    </a>
+  </div>
+  <dl>
+    <dt>
+      Recipe
+    </dt>
+    <dd>
+      <%= @the_step.recipe_id %>
+    </dd>
+
+    <dt>
+      Position
+    </dt>
+    <dd>
+      <%= @the_step.position %>
+    </dd>
+
+    <dt>
+      Instruction
+    </dt>
+    <dd>
+      <%= @the_step.instruction %>
+    </dd>
+
+    <dt>
+      Created at
+    </dt>
+    <dd>
+      <%= time_ago_in_words(@the_step.created_at) %> ago
+    </dd>
+
+    <dt>
+      Updated at
+    </dt>
+    <dd>
+      <%= time_ago_in_words(@the_step.updated_at) %> ago
+    </dd>
+  </dl>
+</article>
+
+<hr>
+
+
+<article>
+  <header>
+    <h2>
+      Edit step
+    </h2>
+  </header>
+
+  <form action="/modify_step/<%= @the_step.id %>"  method="post" >
+    <div>
+      <label for="recipe_id_box">
+        Recipe
+      </label>
+
+      <input type="text" id="recipe_id_box" name="query_recipe_id" value="<%= @the_step.recipe_id %>">
+    </div>
+
+    <div>
+      <label for="position_box">
+        Position
+      </label>
+
+      <input type="text" id="position_box" name="query_position" value="<%= @the_step.position %>">
+    </div>
+
+    <div>
+      <label for="instruction_box">
+        Instruction
+      </label>
+
+      <input type="text" id="instruction_box" name="query_instruction" value="<%= @the_step.instruction %>">
+    </div>
+
+    <button type="submit">
+      Update step
+    </button>
+  </form>
+</article>
+
+<hr>
