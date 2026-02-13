@@ -1,6 +1,10 @@
 Rails.application.routes.draw do
-  # Routes for the Step resource:
+  root "recipes#index"
 
+  #Devise routes for User authentication
+  devise_for :users
+
+  # Routes for the Step resource:
   # CREATE
   post("/insert_step", { :controller => "steps", :action => "create" })
 
@@ -10,7 +14,6 @@ Rails.application.routes.draw do
   get("/steps/:path_id", { :controller => "steps", :action => "show" })
 
   # UPDATE
-
   post("/modify_step/:path_id", { :controller => "steps", :action => "update" })
 
   # DELETE
@@ -29,7 +32,6 @@ Rails.application.routes.draw do
   get("/ingredients/:path_id", { :controller => "ingredients", :action => "show" })
 
   # UPDATE
-
   post("/modify_ingredient/:path_id", { :controller => "ingredients", :action => "update" })
 
   # DELETE
@@ -53,11 +55,4 @@ Rails.application.routes.draw do
 
   # DELETE
   get("/delete_recipe/:path_id", { :controller => "recipes", :action => "destroy" })
-
-  #------------------------------
-
-  devise_for :users
-  # This is a blank app! Pick your first screen, build out the RCAV, and go from there. E.g.:
-  # get("/your_first_screen", { :controller => "pages", :action => "first" })
-  root "photos#index"
 end
