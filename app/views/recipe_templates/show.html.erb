@@ -1,0 +1,96 @@
+<h1>
+  Recipe #<%= @the_recipe.id %> details
+</h1>
+
+<article>
+  <div>
+    <a href="/recipes">
+      Go back
+    </a>
+  </div>
+
+  <div>
+    <a href="/delete_recipe/<%= @the_recipe.id %>">
+      Delete recipe
+    </a>
+  </div>
+  <dl>
+    <dt>
+      Title
+    </dt>
+    <dd>
+      <%= @the_recipe.title %>
+    </dd>
+
+    <dt>
+      Author
+    </dt>
+    <dd>
+      <%= @the_recipe.author_id %>
+    </dd>
+
+    <dt>
+      Source url
+    </dt>
+    <dd>
+      <%= @the_recipe.source_url %>
+    </dd>
+
+    <dt>
+      Created at
+    </dt>
+    <dd>
+      <%= time_ago_in_words(@the_recipe.created_at) %> ago
+    </dd>
+
+    <dt>
+      Updated at
+    </dt>
+    <dd>
+      <%= time_ago_in_words(@the_recipe.updated_at) %> ago
+    </dd>
+  </dl>
+</article>
+
+<hr>
+
+
+<article>
+  <header>
+    <h2>
+      Edit recipe
+    </h2>
+  </header>
+
+  <form action="/modify_recipe/<%= @the_recipe.id %>"  method="post" >
+    <div>
+      <label for="title_box">
+        Title
+      </label>
+
+      <input type="text" id="title_box" name="query_title" value="<%= @the_recipe.title %>">
+    </div>
+
+    <div>
+      <label for="author_id_box">
+        Author
+      </label>
+
+      <input type="text" id="author_id_box" name="query_author_id" value="<%= @the_recipe.author_id %>">
+    </div>
+
+    <div>
+      <label for="source_url_box">
+        Source url
+      </label>
+
+      <input type="text" id="source_url_box" name="query_source_url" value="<%= @the_recipe.source_url %>">
+    </div>
+
+    <button type="submit">
+      Update recipe
+    </button>
+  </form>
+</article>
+
+<hr>

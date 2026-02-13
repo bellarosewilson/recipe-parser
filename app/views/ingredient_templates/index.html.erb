@@ -1,0 +1,67 @@
+<h1>
+  List of all ingredients
+</h1>
+
+<hr>
+
+<article>
+  <header>
+    <h2>
+      Add a new ingredient
+    </h2>
+  </header>
+
+  <form action="/insert_ingredient" method="post">
+    <div>
+      <label for="recipe_id_box">
+        Recipe
+      </label>
+
+      <input type="text" id="recipe_id_box" name="query_recipe_id">
+    </div>
+
+    <div>
+      <label for="unit_box">
+        Unit
+      </label>
+
+      <input type="text" id="unit_box" name="query_unit">
+    </div>
+
+    <div>
+      <label for="amount_box">
+        Amount
+      </label>
+
+      <input type="text" id="amount_box" name="query_amount">
+    </div>
+
+    <div>
+      <label for="name_box">
+        Name
+      </label>
+
+      <input type="text" id="name_box" name="query_name">
+    </div>
+
+    <button type="submit">
+      Create ingredient
+    </button>
+  </form>
+</article>
+
+<hr>
+
+<article>
+  <ul>
+    <% @list_of_ingredients.each do |an_ingredient| %>
+      <li>
+        <a href="/ingredients/<%= an_ingredient.id %>">
+          Ingredient #<%= an_ingredient.id %>
+        </a>
+      </li>
+    <% end %>
+  </ul>
+</article>
+
+<hr>
