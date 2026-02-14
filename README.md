@@ -1,5 +1,7 @@
-# rails-8-template
+References + Resources
 
-For your AppDev Projects!
+Styling
+https://flowbite.com/blocks/
+https://tailwindcss.com/plus/ui-blocks
 
 All files are covered by the MIT license, see [LICENSE.txt](LICENSE.txt).
