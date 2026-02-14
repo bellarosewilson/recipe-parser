@@ -51,6 +51,7 @@ group :development do
   gem "rails-erd"                     # Generate ER diagrams
   gem "rufo"                          # Ruby code formatter
   gem "web-console"                   # Console on exception pages
+  gem "bullet"                       # Detect N+1 queries 
 end
 
 group :test do
