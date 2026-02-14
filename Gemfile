@@ -25,11 +25,16 @@ gem "mini_magick" # Image processing for uploaded files
 gem "httparty" # Simplified HTTP requests for API interactions
 gem "image_processing" # High-level image processing interface
 gem "tailwindcss-rails", "~> 3.3.1" # Tailwind CSS integration for Rails, pinning old versiion for compatibility with Rails 8
+gem "kaminari"           # Pagination
+gem "pundit"             # Authorization
+gem "factory_bot_rails"  # Test factories (move from development to development/test group)
 
 group :development, :test do
   gem "debug", platforms: %i[mri windows], require: "debug/prelude" # Ruby debugger
   gem "rspec-rails", "~> 7.1.1"       # Testing framework
   gem "grade_runner", "~> 0.0.15" # Automated grading
+  gem "rubocop", require: false
+  gem "rubocop-rails-omakase", require: false
 end
 
 group :development do
@@ -46,6 +51,7 @@ group :development do
   gem "rails-erd"                     # Generate ER diagrams
   gem "rufo"                          # Ruby code formatter
   gem "web-console"                   # Console on exception pages
+  gem "bullet"                       # Detect N+1 queries
 end
 
 group :test do
