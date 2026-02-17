@@ -19,5 +19,5 @@ class Chat < ApplicationRecord
   acts_as_chat messages_foreign_key: :chat_id
   
  chat = Chat.create! model: "claude-sonnet-4"
- chat.ask "What are the ingredients and steps in this image?", with: "original_image.jpg"
+ chat.ask "What's in this image?", with: "ruby_conf.jpg"
 end
