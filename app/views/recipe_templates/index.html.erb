@@ -37,7 +37,7 @@
     </div>
 
     <button type="submit">
-      Create recipe
+      Add a Recipe
     </button>
   </form>
 </article>
@@ -45,15 +45,17 @@
 <hr>
 
 <article>
-  <ul>
-    <% @list_of_recipes.each do |a_recipe| %>
-      <li>
-        <a href="/recipes/<%= a_recipe.id %>">
-          Recipe #<%= a_recipe.id %>
-        </a>
-      </li>
-    <% end %>
-  </ul>
+  <% @list_of_recipes.each do |recipe| %>
+    <div>
+      <!-- Show image if attached -->
+      <% if recipe.original_image.attached? %>
+        <%= image_tag recipe.original_image %>
+      <% end %>
+      
+      <h3><%= recipe.title %></h3>
+      <%= link_to "View", "/recipes/#{recipe.id}" %>
+    </div>
+  <% end %>
 </article>
 
 <hr>

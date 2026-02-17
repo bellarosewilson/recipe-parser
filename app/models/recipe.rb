@@ -15,6 +15,8 @@ class Recipe < ApplicationRecord
   has_many :recipe_ingredients, class_name: "Ingredient", foreign_key: "recipe_id", dependent: :destroy
   has_many :steps, class_name: "Step", foreign_key: "recipe_id", dependent: :destroy
 
+  has_one_attached :original_image
+
   validates :title, presence: true
   validates :author_id, presence: true
 

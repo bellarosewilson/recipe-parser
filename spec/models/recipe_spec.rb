@@ -1,3 +1,14 @@
+# == Schema Information
+#
+# Table name: recipes
+#
+#  id         :bigint           not null, primary key
+#  source_url :string
+#  title      :string
+#  created_at :datetime         not null
+#  updated_at :datetime         not null
+#  author_id  :integer
+#
 require 'rails_helper'
 
 RSpec.describe Recipe, type: :model do

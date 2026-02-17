@@ -14,6 +14,14 @@
       Delete recipe
     </a>
   </div>
+
+  <!-- Display recipe image -->
+  <% if @the_recipe.original_image.attached? %>
+    <%= image_tag @the_recipe.original_image %>
+  <% end %>
+
+  <h1><%= @the_recipe.title %></h1>
+
   <dl>
     <dt>
       Title
@@ -53,7 +61,6 @@
 </article>
 
 <hr>
-
 
 <article>
   <header>

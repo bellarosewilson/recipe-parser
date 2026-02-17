@@ -1,0 +1,6 @@
+<h1>Upload Recipe</h1>
+
+<%= form_with url: "/insert_recipe", method: :post, multipart: true do |f| %>
+  <%= f.file_field :recipe_file, accept: "image/*", required: true %>
+  <%= f.submit "Upload Recipe" %>
+<% end %>
