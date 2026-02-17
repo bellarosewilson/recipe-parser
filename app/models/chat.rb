@@ -18,6 +18,7 @@
 class Chat < ApplicationRecord
   acts_as_chat messages_foreign_key: :chat_id
   
- chat = Chat.create! model: "claude-sonnet-4"
- chat.ask "What's in this image?", with: "ruby_conf.jpg"
+  # Example usage (commented out - requires Anthropic API configuration):
+  # chat = Chat.create! model: "claude-sonnet-4"
+  # chat.ask "What's in this image?", with: "ruby_conf.jpg"
 end
