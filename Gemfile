@@ -28,6 +28,7 @@ gem "tailwindcss-rails", "~> 3.3.1" # Tailwind CSS integration for Rails, pinnin
 gem "kaminari"           # Pagination
 gem "pundit"             # Authorization
 gem "factory_bot_rails"  # Test factories (move from development to development/test group)
+gem 'ruby_llm'
 
 group :development, :test do
   gem "debug", platforms: %i[mri windows], require: "debug/prelude" # Ruby debugger
