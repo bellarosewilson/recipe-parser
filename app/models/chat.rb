@@ -16,8 +16,6 @@
 #  fk_rails_...  (model_id => models.id)
 #
 class Chat < ApplicationRecord
-  acts_as_chat messages_foreign_key: :chat_id
-  
- chat = Chat.create! model: "claude-sonnet-4"
- chat.ask "What are the ingredients and steps in this image?", with: "original_image.jpg"
+  acts_as_chat
+  belongs_to :user , optional: true
 end
