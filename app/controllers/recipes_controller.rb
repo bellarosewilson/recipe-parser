@@ -21,6 +21,14 @@ class RecipesController < ApplicationController
     render({ :template => "recipe_templates/show" })
   end
 
+  # TODO: add route and button for this action on recipe show page; only visible if recipe has an attached image and user is the author
+  def parse
+    @recipe = Recipe.find(params[:id])
+    @recipe.parse_original_image(preferred_units: recipe_author.preferred_units)
+
+    redirect_to recipe_path(@recipe), notice: "Recipe parsed successfully from image."
+  end
+
   def create
     uploaded_file = params[:recipe_file]
     if uploaded_file.blank?

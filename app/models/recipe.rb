@@ -23,4 +23,20 @@ class Recipe < ApplicationRecord
   # For User to be able to delete ingredeients/steps when editing/reviewing recipe
   accepts_nested_attributes_for :recipe_ingredients, allow_destroy: true
   accepts_nested_attributes_for :steps, allow_destroy: true
+
+  def parse_original_image(preferred_units: "metric")
+    return {} unless original_image.attached?
+
+    parser = OpenAiParser::ParserService.new(
+      original_image.blob,
+      preferred_units
+    )
+    parsed = parser.parse_recipe
+
+    update(
+      title: parsed[:title],
+      recipe_ingredients_attributes: parsed[:ingredients],
+      steps_attributes: parsed[:steps]
+    )
+  end
 end
