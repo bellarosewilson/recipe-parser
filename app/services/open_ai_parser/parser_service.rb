@@ -49,7 +49,7 @@ module OpenAiParser
     private
 
     def vision_model
-      # Prefer a vision-capable model; gpt-4o and gpt-4o-mini support images
+      # Prefer a vision-capable model; gpt-4o and gpt-4o-mini support images and analysis
       "gpt-4o"
     end
 
