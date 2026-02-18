@@ -16,5 +16,6 @@
 #  fk_rails_...  (model_id => models.id)
 #
 class Chat < ApplicationRecord
-  acts_as_chat messages_foreign_key: :chat_id
+  acts_as_chat
+  belongs_to :user , optional: true
 end
