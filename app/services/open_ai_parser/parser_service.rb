@@ -32,9 +32,16 @@ module OpenAiParser
       response = chat.ask(prompt, with: image_ref)
       raw = response.content
 
-      # Strip possible markdown code fence
       json_str = raw.strip.sub(/\A```(?:json)?\s*/, "").sub(/\s*```\z/, "").strip
       data = JSON.parse(json_str)
+
+      if Rails.env.development?
+        ing = data["ingredients"]
+        st = data["steps"]
+        Rails.logger.info "[OpenAiParser] API top-level keys: #{data.keys.inspect}"
+        Rails.logger.info "[OpenAiParser] ingredients: #{ing.class} size=#{ing.respond_to?(:size) ? ing.size : "n/a"} first=#{ing.is_a?(Array) && ing.any? ? ing.first.inspect : "n/a"}"
+        Rails.logger.info "[OpenAiParser] steps: #{st.class} size=#{st.respond_to?(:size) ? st.size : "n/a"} first=#{st.is_a?(Array) && st.any? ? st.first.inspect : "n/a"}"
+      end
 
       {
         title: normalize_title(data["title"]),
