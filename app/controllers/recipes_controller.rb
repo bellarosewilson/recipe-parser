@@ -1,4 +1,8 @@
 class RecipesController < ApplicationController
+  def recipe_author
+    current_user || User.first
+  end
+
   def index
     matching_recipes = Recipe.all
 
@@ -19,19 +23,30 @@ class RecipesController < ApplicationController
 
   def create
     uploaded_file = params[:recipe_file]
+    if uploaded_file.blank?
+      redirect_to("/recipes/new", { alert: "Please choose an image to upload." })
+      return
+    end
+
+    author = recipe_author
+    unless author
+      redirect_to("/recipes/new", { alert: "No user in the database. Run: rails db:seed" })
+      return
+    end
 
     # Create recipe with image
     the_recipe = Recipe.new
-    the_recipe.author_id = current_user.id
+    the_recipe.author_id = author.id
     the_recipe.title = "Processing..."
     the_recipe.original_image.attach(uploaded_file)
 
     if the_recipe.save
-      # Get URL for OpenAI
-      image_url = url_for(the_recipe.original_image)
-
-      # Parse with OpenAI
-      parser = OpenaiParserService.new(image_url, current_user.preferred_units)
+      # Parse recipe from image with OpenAI vision (pass blob so it works without a public URL)
+      preferred_units = author.respond_to?(:preferred_units) ? author.preferred_units : nil
+      parser = OpenAiParser::ParserService.new(
+        the_recipe.original_image.blob,
+        preferred_units
+      )
       parsed_data = parser.parse_recipe
 
       # Update with parsed data

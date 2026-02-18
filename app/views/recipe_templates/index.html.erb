@@ -11,35 +11,11 @@
     </h2>
   </header>
 
-  <form action="/insert_recipe" method="post">
-    <div>
-      <label for="title_box">
-        Title
-      </label>
+  <p>
+    Upload a photo of a recipe and we'll extract the ingredients and steps!
+  </p>
 
-      <input type="text" id="title_box" name="query_title">
-    </div>
-
-    <div>
-      <label for="author_id_box">
-        Author
-      </label>
-
-      <input type="text" id="author_id_box" name="query_author_id">
-    </div>
-
-    <div>
-      <label for="source_url_box">
-        Source url
-      </label>
-
-      <input type="text" id="source_url_box" name="query_source_url">
-    </div>
-
-    <button type="submit">
-      Add a Recipe
-    </button>
-  </form>
+  <%= link_to "Add a Recipe (upload image)", "/recipes/new", class: "button" %>
 </article>
 
 <hr>
@@ -51,7 +27,7 @@
       <% if recipe.original_image.attached? %>
         <%= image_tag recipe.original_image %>
       <% end %>
-      
+
       <h3><%= recipe.title %></h3>
       <%= link_to "View", "/recipes/#{recipe.id}" %>
     </div>
