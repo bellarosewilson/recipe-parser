@@ -34,7 +34,8 @@
       Author
     </dt>
     <dd>
-      <%= @the_recipe.author_id %>
+      <%# TODO: add author name instead of email  %>
+      <%= @the_recipe.author.email %>
     </dd>
 
     <dt>
@@ -43,22 +44,22 @@
     <dd>
       <%= @the_recipe.source_url %>
     </dd>
-
-    <dt>
-      Created at
-    </dt>
-    <dd>
-      <%= time_ago_in_words(@the_recipe.created_at) %> ago
-    </dd>
-
-    <dt>
-      Updated at
-    </dt>
-    <dd>
-      <%= time_ago_in_words(@the_recipe.updated_at) %> ago
-    </dd>
   </dl>
 </article>
+
+<h2>Ingredients</h2>
+<ul class="list-group list-group-flush">
+  <% @the_recipe.recipe_ingredients.each do |ingredient| %>
+    <li class="list-group-item"><%= ingredient.name %></li>
+  <% end %>
+</ul>
+
+<h2>Steps</h2>
+<ol class="list-group list-group-numbered">
+  <% @the_recipe.steps.each do |step| %>
+    <li class="list-group-item"><%= step.instruction %></li>
+  <% end %>
+</ol>
 
 <hr>
 

@@ -118,6 +118,8 @@ GEM
       debug_inspector (>= 1.2.0)
     bootsnap (1.18.4)
       msgpack (~> 1.2)
+    bootstrap (5.3.8)
+      popper_js (>= 2.11.8, < 3)
     builder (3.3.0)
     bullet (8.1.0)
       activesupport (>= 3.0.0)
@@ -320,6 +322,7 @@ GEM
       ast (~> 2.4.1)
       racc
     pg (1.5.9)
+    popper_js (2.11.8)
     pp (0.6.2)
       prettyprint
     prettyprint (0.2.0)
@@ -595,6 +598,7 @@ DEPENDENCIES
   better_errors
   binding_of_caller
   bootsnap
+  bootstrap (~> 5.3.8)
   bullet
   capybara
   debug
