@@ -54,8 +54,14 @@ class RecipesController < ApplicationController
         preferred_units
       )
       parsed_data = parser.parse_recipe
+    
+      ing_count = parsed_data[:ingredients]&.size || 0
+      steps_count = parsed_data[:steps]&.size || 0
+      Rails.logger.info "[Recipe parse] title=#{parsed_data[:title].inspect} ingredients=#{ing_count} steps=#{steps_count}"
+      if ing_count.zero? && steps_count.zero?
+        Rails.logger.warn "[Recipe parse] No ingredients or steps in parsed data - OpenAI may have returned a different JSON shape."
+      end
 
-      # Update with parsed data; surface errors if nested save fails
       ok = the_recipe.update(
         title: parsed_data[:title],
         recipe_ingredients_attributes: parsed_data[:ingredients],
