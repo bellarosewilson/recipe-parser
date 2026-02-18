@@ -34,6 +34,12 @@ class RecipesController < ApplicationController
       return
     end
 
+    # Fail fast if OpenAI key is missing (credentials)
+    if Rails.application.credentials.dig(:openai_api_key).blank?
+      redirect_to("/recipes/new", { alert: "OpenAI API key not set. Run: rails credentials:edit and add openai_api_key:" })
+      return
+    end
+
     # Create recipe with image
     the_recipe = Recipe.new
     the_recipe.author_id = author.id
@@ -49,19 +55,32 @@ class RecipesController < ApplicationController
       )
       parsed_data = parser.parse_recipe
 
-      # Update with parsed data
-      the_recipe.update(
+      # Update with parsed data; surface errors if nested save fails
+      ok = the_recipe.update(
         title: parsed_data[:title],
         recipe_ingredients_attributes: parsed_data[:ingredients],
         steps_attributes: parsed_data[:steps],
       )
-
-      redirect_to("/recipes/#{the_recipe.id}", { :notice => "Recipe created successfully." })
+      if ok
+        redirect_to("/recipes/#{the_recipe.id}", { :notice => "Recipe created successfully." })
+      else
+        errors = the_recipe.errors.full_messages
+        the_recipe.recipe_ingredients.each { |i| errors.concat(i.errors.full_messages) }
+        the_recipe.steps.each { |s| errors.concat(s.errors.full_messages) }
+        redirect_to("/recipes/#{the_recipe.id}", { :alert => "Recipe saved but parse data could not be applied: #{errors.uniq.join(", ")}" })
+      end
     else
       redirect_to("/recipes", { :alert => the_recipe.errors.full_messages.to_sentence })
     end
   rescue StandardError => e
-    redirect_to("/recipes", { :alert => "Upload failed: #{e.message}" })
+    # Recipe may already be saved with "Processing..."; show error on its page so user sees which recipe failed
+    last_recipe = Recipe.order(created_at: :desc).first
+    if last_recipe && last_recipe.title == "Processing..."
+      last_recipe.update_column(:title, "Parse failed")
+      redirect_to("/recipes/#{last_recipe.id}", { :alert => "Parse failed: #{e.message}" })
+    else
+      redirect_to("/recipes", { :alert => "Upload failed: #{e.message}" })
+    end
   end
 
   def update
