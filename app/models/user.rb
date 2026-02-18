@@ -18,12 +18,14 @@
 #  index_users_on_reset_password_token  (reset_password_token) UNIQUE
 #
 class User < ApplicationRecord
- has_one_attached :original_image
+  has_one_attached :original_image
   # Include default devise modules. Others available are:
   # :confirmable, :lockable, :timeoutable, :trackable and :omniauthable
   devise :database_authenticatable, :registerable,
          :recoverable, :rememberable, :validatable
 
   has_many :recipes, class_name: "Recipe", foreign_key: "author_id", dependent: :destroy
+  has_many :chats, dependent: :nullify
+
   validates :preferred_units, inclusion: { in: %w[metric imperial] }, allow_nil: true
 end
