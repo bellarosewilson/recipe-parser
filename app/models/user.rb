@@ -30,5 +30,6 @@ class User < ApplicationRecord
   validates :preferred_units, inclusion: { in: %w[metric imperial] }, allow_nil: true
 
   def display_name
-    email 
+    email.split("@").first
+  end 
 end
