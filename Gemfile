@@ -30,6 +30,7 @@ gem "pundit"             # Authorization
 gem "factory_bot_rails"  # Test factories (move from development to development/test group)
 gem 'ruby_llm'
 gem 'bootstrap', '~> 5.3.8'
+gem 'jquery-rails'
 
 group :development, :test do
   gem "debug", platforms: %i[mri windows], require: "debug/prelude" # Ruby debugger
@@ -64,3 +65,5 @@ group :test do
   gem "shoulda-matchers", "~> 6.4"    # One-liner tests for common patterns
   gem "webmock"                       # Mock HTTP requests in tests
 end
+
+gem "dartsass-rails", "~> 0.5.1"

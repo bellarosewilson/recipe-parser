@@ -42,3 +42,6 @@ examples.txt
 .env
 
 /config/credentials/development.key
+
+/app/assets/builds/*
+!/app/assets/builds/.keep
