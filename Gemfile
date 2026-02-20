@@ -29,8 +29,9 @@ gem "kaminari"           # Pagination
 gem "pundit"             # Authorization
 gem "factory_bot_rails"  # Test factories (move from development to development/test group)
 gem 'ruby_llm'
-gem 'bootstrap', '~> 5.3.8'
-gem 'jquery-rails'
+gem 'bootstrap', '~> 5.3.8' 
+gem 'jquery-rails' 
+gem 'autoprefixer-rails' # PostCSS autoprefixer for CSS compatibility
 
 group :development, :test do
   gem "debug", platforms: %i[mri windows], require: "debug/prelude" # Ruby debugger
