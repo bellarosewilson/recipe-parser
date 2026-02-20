@@ -1,104 +1,90 @@
-<h1>
-  Recipe #<%= @the_recipe.id %> details
-</h1>
-
-<article>
+<div class="d-flex justify-content-between align-items-center mb-4">
+  <h1 class="h3 mb-0"><%= @the_recipe.title %></h1>
   <div>
-    <a href="/recipes">
-      Go back
-    </a>
+    <%= link_to "Back to list", "/recipes", class: "btn btn-outline-secondary btn-sm" %>
+    <%= link_to "Delete recipe", "/delete_recipe/#{@the_recipe.id}", class: "btn btn-outline-danger btn-sm", data: { turbo_confirm: "Delete this recipe?" } %>
+  </div>
+</div>
+
+<div class="row">
+  <div class="col-lg-8">
+    <% if @the_recipe.original_image.attached? %>
+      <div class="card shadow-sm mb-4">
+        <%= image_tag @the_recipe.original_image, class: "card-img-top", style: "max-height: 400px; object-fit: contain; background: #f8f9fa;" %>
+        <% if @can_reparse_recipe %>
+          <div class="card-body py-2">
+            <%= button_to "Re-parse from image", "/recipes/#{@the_recipe.id}/parse", method: :post, class: "btn btn-sm btn-outline-primary", form: { data: { turbo_confirm: "Re-parse this recipe from the image?" } } %>
+          </div>
+        <% end %>
+      </div>
+    <% end %>
+
+    <div class="card shadow-sm mb-4">
+      <div class="card-body">
+        <dl class="row mb-0">
+          <dt class="col-sm-3 text-muted">Title</dt>
+          <dd class="col-sm-9"><%= @the_recipe.title %></dd>
+          <dt class="col-sm-3 text-muted">Author</dt>
+          <dd class="col-sm-9"><%= @the_recipe.author.display_name %></dd>
+          <% if @the_recipe.source_url.present? %>
+            <dt class="col-sm-3 text-muted">Source</dt>
+            <dd class="col-sm-9"><%= link_to @the_recipe.source_url, @the_recipe.source_url, target: "_blank", rel: "noopener" %></dd>
+          <% end %>
+        </dl>
+      </div>
+    </div>
+
+    <div class="card shadow-sm mb-4">
+      <div class="card-header bg-white">
+        <h2 class="h6 mb-0">Ingredients</h2>
+      </div>
+      <ul class="list-group list-group-flush">
+        <% @the_recipe.recipe_ingredients.each do |ingredient| %>
+          <li class="list-group-item"><%= ingredient.name %><% if ingredient.amount.present? || ingredient.unit.present? %> — <%= [ingredient.amount, ingredient.unit].compact.join(" ") %><% end %></li>
+        <% end %>
+        <% if @the_recipe.recipe_ingredients.none? %>
+          <li class="list-group-item text-muted">No ingredients yet.</li>
+        <% end %>
+      </ul>
+    </div>
+
+    <div class="card shadow-sm mb-4">
+      <div class="card-header bg-white">
+        <h2 class="h6 mb-0">Steps</h2>
+      </div>
+      <ol class="list-group list-group-flush list-group-numbered">
+        <% @the_recipe.steps.each do |step| %>
+          <li class="list-group-item"><%= step.instruction %></li>
+        <% end %>
+        <% if @the_recipe.steps.none? %>
+          <li class="list-group-item text-muted">No steps yet.</li>
+        <% end %>
+      </ol>
+    </div>
   </div>
 
-  <div>
-    <a href="/delete_recipe/<%= @the_recipe.id %>">
-      Delete recipe
-    </a>
+  <div class="col-lg-4">
+    <div class="card shadow-sm sticky-top" style="top: 1rem;">
+      <div class="card-header bg-white">
+        <h2 class="h6 mb-0">Edit recipe</h2>
+      </div>
+      <div class="card-body">
+        <%= form_with url: "/modify_recipe/#{@the_recipe.id}", method: :post, local: true do |f| %>
+          <div class="mb-3">
+            <%= f.label :query_title, "Title", class: "form-label" %>
+            <%= f.text_field :query_title, value: @the_recipe.title, id: "title_box", class: "form-control" %>
+          </div>
+          <div class="mb-3">
+            <%= f.label :query_author_id, "Author", class: "form-label" %>
+            <%= f.text_field :query_author_id, value: @the_recipe.author_id, id: "author_id_box", class: "form-control" %>
+          </div>
+          <div class="mb-3">
+            <%= f.label :query_source_url, "Source URL", class: "form-label" %>
+            <%= f.url_field :query_source_url, value: @the_recipe.source_url, id: "source_url_box", class: "form-control" %>
+          </div>
+          <%= f.submit "Update recipe", class: "btn btn-primary w-100" %>
+        <% end %>
+      </div>
+    </div>
   </div>
-
-  <!-- Display recipe image -->
-  <% if @the_recipe.original_image.attached? %>
-    <%= image_tag @the_recipe.original_image %>
-  <% end %>
-
-  <h1><%= @the_recipe.title %></h1>
-
-  <dl>
-    <dt>
-      Title
-    </dt>
-    <dd>
-      <%= @the_recipe.title %>
-    </dd>
-
-    <dt>
-      Author
-    </dt>
-    <dd>
-      <%# TODO: add author name instead of email  %>
-      <%= @the_recipe.author.email %>
-    </dd>
-
-    <dt>
-      Source url
-    </dt>
-    <dd>
-      <%= @the_recipe.source_url %>
-    </dd>
-  </dl>
-</article>
-
-<h2>Ingredients</h2>
-<ul class="list-group list-group-flush">
-  <% @the_recipe.recipe_ingredients.each do |ingredient| %>
-    <li class="list-group-item"><%= ingredient.name %></li>
-  <% end %>
-</ul>
-
-<h2>Steps</h2>
-<ol class="list-group list-group-numbered">
-  <% @the_recipe.steps.each do |step| %>
-    <li class="list-group-item"><%= step.instruction %></li>
-  <% end %>
-</ol>
-
-<hr>
-
-<article>
-  <header>
-    <h2>
-      Edit recipe
-    </h2>
-  </header>
-
-  <form action="/modify_recipe/<%= @the_recipe.id %>"  method="post" >
-    <div>
-      <label for="title_box">
-        Title
-      </label>
-
-      <input type="text" id="title_box" name="query_title" value="<%= @the_recipe.title %>">
-    </div>
-
-    <div>
-      <label for="author_id_box">
-        Author
-      </label>
-
-      <input type="text" id="author_id_box" name="query_author_id" value="<%= @the_recipe.author_id %>">
-    </div>
-
-    <div>
-      <label for="source_url_box">
-        Source url
-      </label>
-
-      <input type="text" id="source_url_box" name="query_source_url" value="<%= @the_recipe.source_url %>">
-    </div>
-
-    <button type="submit">
-      Update recipe
-    </button>
-  </form>
-</article>
-
-<hr>
+</div>
