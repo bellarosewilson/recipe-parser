@@ -18,11 +18,7 @@ class IngredientsController < ApplicationController
   end
 
   def create
-    the_ingredient = Ingredient.new
-    the_ingredient.recipe_id = params.fetch("query_recipe_id")
-    the_ingredient.unit = params.fetch("query_unit")
-    the_ingredient.amount = params.fetch("query_amount")
-    the_ingredient.name = params.fetch("query_name")
+    the_ingredient = Ingredient.new(ingredient_params)
 
     if the_ingredient.valid?
       the_ingredient.save
@@ -35,11 +31,7 @@ class IngredientsController < ApplicationController
   def update
     the_id = params.fetch("path_id")
     the_ingredient = Ingredient.where({ :id => the_id }).at(0)
-
-    the_ingredient.recipe_id = params.fetch("query_recipe_id")
-    the_ingredient.unit = params.fetch("query_unit")
-    the_ingredient.amount = params.fetch("query_amount")
-    the_ingredient.name = params.fetch("query_name")
+    the_ingredient.assign_attributes(ingredient_params)
 
     if the_ingredient.valid?
       the_ingredient.save
@@ -56,5 +48,11 @@ class IngredientsController < ApplicationController
     the_ingredient.destroy
 
     redirect_to("/ingredients", { :notice => "Ingredient deleted successfully." } )
+  end
+
+  private
+
+  def ingredient_params
+    params.require(:ingredient).permit(:recipe_id, :unit, :amount, :name)
   end
 end

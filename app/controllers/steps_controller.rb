@@ -18,10 +18,7 @@ class StepsController < ApplicationController
   end
 
   def create
-    the_step = Step.new
-    the_step.recipe_id = params.fetch("query_recipe_id")
-    the_step.position = params.fetch("query_position")
-    the_step.instruction = params.fetch("query_instruction")
+    the_step = Step.new(step_params)
 
     if the_step.valid?
       the_step.save
@@ -34,10 +31,7 @@ class StepsController < ApplicationController
   def update
     the_id = params.fetch("path_id")
     the_step = Step.where({ :id => the_id }).at(0)
-
-    the_step.recipe_id = params.fetch("query_recipe_id")
-    the_step.position = params.fetch("query_position")
-    the_step.instruction = params.fetch("query_instruction")
+    the_step.assign_attributes(step_params)
 
     if the_step.valid?
       the_step.save
@@ -54,5 +48,11 @@ class StepsController < ApplicationController
     the_step.destroy
 
     redirect_to("/steps", { :notice => "Step deleted successfully." } )
+  end
+
+  private
+
+  def step_params
+    params.require(:step).permit(:recipe_id, :position, :instruction)
   end
 end

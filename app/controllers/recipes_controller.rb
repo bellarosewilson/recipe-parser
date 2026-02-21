@@ -6,6 +6,7 @@ class RecipesController < ApplicationController
 
   def show
     @the_recipe = Recipe.find(params[:path_id])
+    authorize @the_recipe
     @can_reparse_recipe = @the_recipe.original_image.attached? && (respond_to?(:current_user) && current_user == @the_recipe.author)
     render template: "recipe_templates/show"
   end
@@ -25,6 +26,7 @@ class RecipesController < ApplicationController
 
   def parse
     @recipe = Recipe.find(params[:path_id])
+    authorize @recipe
     if @recipe.parse_original_image(preferred_units: recipe_author.preferred_units)
       redirect_to "/recipes/#{@recipe.id}", notice: "Recipe parsed successfully from image."
     else
@@ -34,7 +36,10 @@ class RecipesController < ApplicationController
 
   def update
     @the_recipe = Recipe.find(params[:path_id])
-    if @the_recipe.update(update_params)
+    authorize @the_recipe
+    @the_recipe.assign_attributes(recipe_params)
+    @the_recipe.author_id = recipe_author.id
+    if @the_recipe.save
       redirect_to "/recipes/#{@the_recipe.id}", notice: "Recipe updated successfully."
     else
       redirect_to "/recipes/#{@the_recipe.id}", alert: @the_recipe.errors.full_messages.to_sentence
@@ -43,6 +48,7 @@ class RecipesController < ApplicationController
 
   def destroy
     @the_recipe = Recipe.find(params[:path_id])
+    authorize @the_recipe
     @the_recipe.destroy
     redirect_to "/recipes", notice: "Recipe deleted successfully."
   end
@@ -53,11 +59,7 @@ class RecipesController < ApplicationController
     (respond_to?(:current_user) && current_user) || User.first
   end
 
-  def update_params
-    {
-      title: params[:query_title],
-      author_id: params[:query_author_id],
-      source_url: params[:query_source_url]
-    }
+  def recipe_params
+    params.require(:recipe).permit(:title, :source_url)
   end
 end
