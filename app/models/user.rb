@@ -28,4 +28,8 @@ class User < ApplicationRecord
   has_many :chats, dependent: :nullify
 
   validates :preferred_units, inclusion: { in: %w[metric imperial] }, allow_nil: true
+
+  def display_name
+    email.split("@").first
+  end 
 end

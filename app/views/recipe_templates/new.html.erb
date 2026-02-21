@@ -1,6 +1,14 @@
-<h1>Upload Recipe</h1>
+<h1 class="mb-4">Upload Recipe</h1>
 
-<%= form_with url: "/insert_recipe", method: :post, multipart: true do |f| %>
-  <%= f.file_field :recipe_file, accept: "image/*", required: true %>
-  <%= f.submit "Upload Recipe" %>
-<% end %>
+<div class="card shadow-sm" style="max-width: 32rem;">
+  <div class="card-body">
+    <p class="text-muted mb-3">Choose a photo of a recipe (screenshot or photo). We'll extract the title, ingredients, and steps.</p>
+    <%= form_with url: "/insert_recipe", method: :post, multipart: true do |f| %>
+      <div class="mb-3">
+        <%= f.file_field :recipe_file, accept: "image/*", required: true, class: "form-control" %>
+      </div>
+      <%= f.submit "Upload Recipe", class: "btn btn-primary" %>
+      <%= link_to "Cancel", "/recipes", class: "btn btn-outline-secondary ms-2" %>
+    <% end %>
+  </div>
+</div>

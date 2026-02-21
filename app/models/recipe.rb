@@ -24,19 +24,29 @@ class Recipe < ApplicationRecord
   accepts_nested_attributes_for :recipe_ingredients, allow_destroy: true
   accepts_nested_attributes_for :steps, allow_destroy: true
 
+  # Applies parsed data to the recipe. Returns [success, errors]
+  def apply_parsed_data(parsed_data)
+    ok = update(
+      title: parsed_data[:title],
+      recipe_ingredients_attributes: parsed_data[:ingredients],
+      steps_attributes: parsed_data[:steps],
+    )
+    return [true, nil] if ok
+
+    errors = errors.full_messages.to_a
+    recipe_ingredients.each { |i| errors.concat(i.errors.full_messages) }
+    steps.each { |s| errors.concat(s.errors.full_messages) }
+    [false, errors.uniq]
+  end
+
   def parse_original_image(preferred_units: "metric")
-    return {} unless original_image.attached?
+    return false unless original_image.attached?
 
     parser = OpenAiParser::ParserService.new(
       original_image.blob,
       preferred_units
     )
     parsed = parser.parse_recipe
-
-    update(
-      title: parsed[:title],
-      recipe_ingredients_attributes: parsed[:ingredients],
-      steps_attributes: parsed[:steps]
-    )
+    apply_parsed_data(parsed).first
   end
 end

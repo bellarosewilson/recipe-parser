@@ -1,7 +1,7 @@
 Rails.application.routes.draw do
- get("/", { :controller => "pages", :action => "home" })
- 
- get("/recipes/new", { :controller => "recipes", :action => "new" })
+  get("/", { :controller => "pages", :action => "home" })
+
+  get("/recipes/new", { :controller => "recipes", :action => "new" })
   #Devise routes for User authentication
   devise_for :users
 
@@ -50,8 +50,9 @@ Rails.application.routes.draw do
 
   get("/recipes/:path_id", { :controller => "recipes", :action => "show" })
 
-  # UPDATE
+  post("/recipes/:path_id/parse", { :controller => "recipes", :action => "parse" })
 
+  # UPDATE
   post("/modify_recipe/:path_id", { :controller => "recipes", :action => "update" })
 
   # DELETE
