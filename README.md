@@ -1,6 +1,6 @@
 # Recipe Manager
 
-**Upload a photo of a recipe; the app extracts title, ingredients, and steps using AI (OpenAI) and stores them in a searchable, paginated recipe manager.**
+**Upload a photo or screenshot (jpg,png,heic,heif) of your recipe, Recipe Manager will parse the ingredients, units, and steps.**
 
 ---
 
