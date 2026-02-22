@@ -1,5 +1,7 @@
 module Recipes
   class CreateFromImageService
+    include Rails.application.routes.url_helpers
+
     Result = Struct.new(:success?, :recipe, :redirect_path, :notice, :alert, keyword_init: true)
 
     def self.call(uploaded_file:, author:)
@@ -12,25 +14,25 @@ module Recipes
     end
 
     def call
-      return failure("/recipes/new", alert: "Please choose an image to upload.") if @uploaded_file.blank?
-      return failure("/recipes/new", alert: "No user in the database. Run: rails db:seed") unless @author
-      return failure("/recipes/new", alert: "OpenAI API key not set. Run: rails credentials:edit and add openai_api_key:") if openai_key_blank?
+      return failure(new_recipe_path, alert: "Please choose an image to upload.") if @uploaded_file.blank?
+      return failure(new_recipe_path, alert: "No user in the database. Run: rails db:seed") unless @author
+      return failure(new_recipe_path, alert: "OpenAI API key not set. Run: rails credentials:edit and add openai_api_key:") if openai_key_blank?
 
       recipe = build_recipe_with_image
       unless recipe&.persisted?
-        return failure("/recipes", alert: recipe ? recipe.errors.full_messages.to_sentence : "Failed to save recipe.")
+        return failure(recipes_path, alert: recipe ? recipe.errors.full_messages.to_sentence : "Failed to save recipe.")
       end
 
       parsed_data = parse_recipe_image(recipe)
       ok, errors = recipe.apply_parsed_data(parsed_data)
 
       if ok
-        Result.new(success?: true, recipe: recipe, redirect_path: "/recipes/#{recipe.id}", notice: "Recipe created successfully.")
+        Result.new(success?: true, recipe: recipe, redirect_path: recipe_path(recipe), notice: "Recipe created successfully.")
       else
         Result.new(
           success?: true, # recipe exists, we're showing it
           recipe: recipe,
-          redirect_path: "/recipes/#{recipe.id}",
+          redirect_path: recipe_path(recipe),
           alert: "Recipe saved but parse data could not be applied: #{errors.join(', ')}"
         )
       end
@@ -66,12 +68,12 @@ module Recipes
     end
 
     def handle_error(e)
-      last_recipe = Recipe.order(created_at: :desc).first
+      last_recipe = Recipe.recent.first
       if last_recipe&.title == "Processing..."
         last_recipe.update_column(:title, "Parse failed")
-        failure("/recipes/#{last_recipe.id}", alert: "Parse failed: #{e.message}")
+        failure(recipe_path(last_recipe), alert: "Parse failed: #{e.message}")
       else
-        failure("/recipes", alert: "Upload failed: #{e.message}")
+        failure(recipes_path, alert: "Upload failed: #{e.message}")
       end
     end
 

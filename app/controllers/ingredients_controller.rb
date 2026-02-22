@@ -8,46 +8,34 @@ class IngredientsController < ApplicationController
   end
 
   def show
-    the_id = params.fetch("path_id")
-
-    matching_ingredients = Ingredient.where({ :id => the_id })
-
-    @the_ingredient = matching_ingredients.at(0)
-
+    @the_ingredient = Ingredient.find(params[:id])
     render({ :template => "ingredient_templates/show" })
   end
 
   def create
     the_ingredient = Ingredient.new(ingredient_params)
 
-    if the_ingredient.valid?
-      the_ingredient.save
-      redirect_to("/ingredients", { :notice => "Ingredient created successfully." })
+    if the_ingredient.save
+      redirect_to ingredients_path, notice: "Ingredient created successfully."
     else
-      redirect_to("/ingredients", { :alert => the_ingredient.errors.full_messages.to_sentence })
+      redirect_to ingredients_path, alert: the_ingredient.errors.full_messages.to_sentence
     end
   end
 
   def update
-    the_id = params.fetch("path_id")
-    the_ingredient = Ingredient.where({ :id => the_id }).at(0)
-    the_ingredient.assign_attributes(ingredient_params)
+    @the_ingredient = Ingredient.find(params[:id])
 
-    if the_ingredient.valid?
-      the_ingredient.save
-      redirect_to("/ingredients/#{the_ingredient.id}", { :notice => "Ingredient updated successfully." } )
+    if @the_ingredient.update(ingredient_params)
+      redirect_to ingredient_path(@the_ingredient), notice: "Ingredient updated successfully."
     else
-      redirect_to("/ingredients/#{the_ingredient.id}", { :alert => the_ingredient.errors.full_messages.to_sentence })
+      redirect_to ingredient_path(@the_ingredient), alert: @the_ingredient.errors.full_messages.to_sentence
     end
   end
 
   def destroy
-    the_id = params.fetch("path_id")
-    the_ingredient = Ingredient.where({ :id => the_id }).at(0)
-
-    the_ingredient.destroy
-
-    redirect_to("/ingredients", { :notice => "Ingredient deleted successfully." } )
+    @the_ingredient = Ingredient.find(params[:id])
+    @the_ingredient.destroy
+    redirect_to ingredients_path, notice: "Ingredient deleted successfully."
   end
 
   private

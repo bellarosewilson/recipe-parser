@@ -10,6 +10,8 @@
 #  author_id  :integer
 #
 class Recipe < ApplicationRecord
+  scope :recent, -> { order(created_at: :desc) }
+  
   belongs_to :author, required: true, class_name: "User", foreign_key: "author_id"
 
   has_many :recipe_ingredients, class_name: "Ingredient", foreign_key: "recipe_id", dependent: :destroy

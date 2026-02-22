@@ -1,12 +1,11 @@
 class RecipesController < ApplicationController
   def index
-    @list_of_recipes = Recipe.order(created_at: :desc)
+    @list_of_recipes = Recipe.recent
     render template: "recipe_templates/index"
   end
 
   def show
-    @the_recipe = Recipe.find(params[:path_id])
-    authorize @the_recipe
+    @the_recipe = Recipe.find(params[:id])
     @can_reparse_recipe = @the_recipe.original_image.attached? && (respond_to?(:current_user) && current_user == @the_recipe.author)
     render template: "recipe_templates/show"
   end
@@ -25,32 +24,27 @@ class RecipesController < ApplicationController
   end
 
   def parse
-    @recipe = Recipe.find(params[:path_id])
-    authorize @recipe
+    @recipe = Recipe.find(params[:id])
     if @recipe.parse_original_image(preferred_units: recipe_author.preferred_units)
-      redirect_to "/recipes/#{@recipe.id}", notice: "Recipe parsed successfully from image."
+      redirect_to recipe_path(@recipe), notice: "Recipe parsed successfully from image."
     else
-      redirect_to "/recipes/#{@recipe.id}", alert: "Could not parse recipe (no image attached?)."
+      redirect_to recipe_path(@recipe), alert: "Could not parse recipe (no image attached?)."
     end
   end
 
   def update
-    @the_recipe = Recipe.find(params[:path_id])
-    authorize @the_recipe
-    @the_recipe.assign_attributes(recipe_params)
-    @the_recipe.author_id = recipe_author.id
-    if @the_recipe.save
-      redirect_to "/recipes/#{@the_recipe.id}", notice: "Recipe updated successfully."
+    @the_recipe = Recipe.find(params[:id])
+    if @the_recipe.update(recipe_params)
+      redirect_to recipe_path(@the_recipe), notice: "Recipe updated successfully."
     else
-      redirect_to "/recipes/#{@the_recipe.id}", alert: @the_recipe.errors.full_messages.to_sentence
+      redirect_to recipe_path(@the_recipe), alert: @the_recipe.errors.full_messages.to_sentence
     end
   end
 
   def destroy
-    @the_recipe = Recipe.find(params[:path_id])
-    authorize @the_recipe
+    @the_recipe = Recipe.find(params[:id])
     @the_recipe.destroy
-    redirect_to "/recipes", notice: "Recipe deleted successfully."
+    redirect_to recipes_path, notice: "Recipe deleted successfully."
   end
 
   private
@@ -60,6 +54,8 @@ class RecipesController < ApplicationController
   end
 
   def recipe_params
-    params.require(:recipe).permit(:title, :source_url)
+    p = params.require(:recipe).permit(:title, :source_url)
+    p[:author_id] = recipe_author.id
+    p
   end
 end
