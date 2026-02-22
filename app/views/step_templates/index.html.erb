@@ -1,5 +1,5 @@
 <h1>
-  List of all steps
+  List of All Steps
 </h1>
 
 <hr>
@@ -7,39 +7,28 @@
 <article>
   <header>
     <h2>
-      Add a new step
+      Add a New Step
     </h2>
   </header>
 
-  <form action="/insert_step" method="post">
+  <%= form_with url: steps_path, scope: :step do |f| %>
     <div>
-      <label for="recipe_id_box">
-        Recipe
-      </label>
-
-      <input type="text" id="recipe_id_box" name="query_recipe_id">
+      <%= f.label :recipe_id, "Recipe" %>
+      <%= f.number_field :recipe_id %>
     </div>
 
     <div>
-      <label for="position_box">
-        Position
-      </label>
-
-      <input type="text" id="position_box" name="query_position">
+      <%= f.label :position, "Position" %>
+      <%= f.text_field :position %>
     </div>
 
     <div>
-      <label for="instruction_box">
-        Instruction
-      </label>
-
-      <input type="text" id="instruction_box" name="query_instruction">
+      <%= f.label :instruction, "Instruction" %>
+      <%= f.text_field :instruction %>
     </div>
 
-    <button type="submit">
-      Create step
-    </button>
-  </form>
+    <%= f.submit "Create step" %>
+  <% end %>
 </article>
 
 <hr>
@@ -48,9 +37,7 @@
   <ul>
     <% @list_of_steps.each do |a_step| %>
       <li>
-        <a href="/steps/<%= a_step.id %>">
-          Step #<%= a_step.id %>
-        </a>
+        <%= link_to "Step ##{a_step.id}", step_path(a_step) %>
       </li>
     <% end %>
   </ul>
