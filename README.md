@@ -21,14 +21,6 @@
  parser = OpenAiParser::ParserService.new(r.original_image.blob)
  parser.parse_recipe
 
-### References + Resources
- ## Styling
- https://flowbite.com/blocks/
- https://tailwindcss.com/plus/ui-blocks
-
-
-All files are covered by the MIT license, see [LICENSE.txt](LICENSE.txt).
-=======
 # Recipe Manager
 
 **Upload a photo of a recipe; the app extracts title, ingredients, and steps using AI (OpenAI) and stores them in a searchable, paginated recipe manager.**
@@ -190,10 +182,9 @@ Use the log tester script to confirm your API key and parser setup.
 ### Rubocop or tests fail in CI
 
 - Run locally: `bundle exec rubocop` and `bundle exec rspec`. Fix any new offenses or failing specs before pushing.
-- 
+
 ---
 
 ## License
 
 All files are covered by the MIT license. See [LICENSE.txt](LICENSE.txt).
->>>>>>> main
