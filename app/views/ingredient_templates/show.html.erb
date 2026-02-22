@@ -4,15 +4,11 @@
 
 <article>
   <div>
-    <a href="/ingredients">
-      Go back
-    </a>
+    <%= link_to "Go back", ingredients_path %>
   </div>
 
   <div>
-    <a href="/delete_ingredient/<%= @the_ingredient.id %>">
-      Delete ingredient
-    </a>
+    <%= button_to "Delete ingredient", ingredient_path(@the_ingredient), method: :delete, data: { turbo_confirm: "Delete this ingredient?" } %>
   </div>
   <dl>
     <dt>
@@ -69,43 +65,29 @@
     </h2>
   </header>
 
-  <form action="/modify_ingredient/<%= @the_ingredient.id %>"  method="post" >
+  <%= form_with model: @the_ingredient, url: ingredient_path(@the_ingredient), method: :patch do |f| %>
     <div>
-      <label for="recipe_id_box">
-        Recipe
-      </label>
-
-      <input type="text" id="recipe_id_box" name="query_recipe_id" value="<%= @the_ingredient.recipe_id %>">
+      <%= f.label :recipe_id, "Recipe" %>
+      <%= f.number_field :recipe_id %>
     </div>
 
     <div>
-      <label for="unit_box">
-        Unit
-      </label>
-
-      <input type="text" id="unit_box" name="query_unit" value="<%= @the_ingredient.unit %>">
+      <%= f.label :unit, "Unit" %>
+      <%= f.text_field :unit %>
     </div>
 
     <div>
-      <label for="amount_box">
-        Amount
-      </label>
-
-      <input type="text" id="amount_box" name="query_amount" value="<%= @the_ingredient.amount %>">
+      <%= f.label :amount, "Amount" %>
+      <%= f.text_field :amount %>
     </div>
 
     <div>
-      <label for="name_box">
-        Name
-      </label>
-
-      <input type="text" id="name_box" name="query_name" value="<%= @the_ingredient.name %>">
+      <%= f.label :name, "Name" %>
+      <%= f.text_field :name %>
     </div>
 
-    <button type="submit">
-      Update ingredient
-    </button>
-  </form>
+    <%= f.submit "Update ingredient" %>
+  <% end %>
 </article>
 
 <hr>

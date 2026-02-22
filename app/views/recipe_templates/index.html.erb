@@ -6,7 +6,7 @@
     <p class="card-text text-muted mb-3">
       Upload a photo of your recipe and we'll extract the ingredients and steps! (accepts: jpg,png,jpeg,heic)
     </p>
-    <%= link_to "Add a Recipe (upload image)", "/recipes/new", class: "btn btn-primary" %>
+    <%= link_to "Add a Recipe (upload image)", new_recipe_path, class: "btn btn-primary" %>
   </div>
 </div>
 
@@ -24,7 +24,7 @@
         <% end %>
         <div class="card-body d-flex flex-column">
           <h3 class="card-title h6"><%= recipe.title %></h3>
-          <%= link_to "View recipe", "/recipes/#{recipe.id}", class: "btn btn-outline-primary btn-sm mt-auto" %>
+          <%= link_to "View recipe", recipe_path(recipe), class: "btn btn-outline-primary btn-sm mt-auto" %>
         </div>
       </div>
     </div>

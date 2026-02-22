@@ -11,43 +11,29 @@
     </h2>
   </header>
 
-  <form action="/insert_ingredient" method="post">
+  <%= form_with url: ingredients_path, scope: :ingredient do |f| %>
     <div>
-      <label for="recipe_id_box">
-        Recipe
-      </label>
-
-      <input type="text" id="recipe_id_box" name="query_recipe_id">
+      <%= f.label :recipe_id, "Recipe" %>
+      <%= f.number_field :recipe_id %>
     </div>
 
     <div>
-      <label for="unit_box">
-        Unit
-      </label>
-
-      <input type="text" id="unit_box" name="query_unit">
+      <%= f.label :unit, "Unit" %>
+      <%= f.text_field :unit %>
     </div>
 
     <div>
-      <label for="amount_box">
-        Amount
-      </label>
-
-      <input type="text" id="amount_box" name="query_amount">
+      <%= f.label :amount, "Amount" %>
+      <%= f.text_field :amount %>
     </div>
 
     <div>
-      <label for="name_box">
-        Name
-      </label>
-
-      <input type="text" id="name_box" name="query_name">
+      <%= f.label :name, "Name" %>
+      <%= f.text_field :name %>
     </div>
 
-    <button type="submit">
-      Create ingredient
-    </button>
-  </form>
+    <%= f.submit "Create ingredient" %>
+  <% end %>
 </article>
 
 <hr>
@@ -56,9 +42,7 @@
   <ul>
     <% @list_of_ingredients.each do |an_ingredient| %>
       <li>
-        <a href="/ingredients/<%= an_ingredient.id %>">
-          Ingredient #<%= an_ingredient.id %>
-        </a>
+        <%= link_to "Ingredient ##{an_ingredient.id}", ingredient_path(an_ingredient) %>
       </li>
     <% end %>
   </ul>

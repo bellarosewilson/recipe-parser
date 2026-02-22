@@ -8,51 +8,39 @@ class StepsController < ApplicationController
   end
 
   def show
-    the_id = params.fetch("path_id")
-
-    matching_steps = Step.where({ :id => the_id })
-
-    @the_step = matching_steps.at(0)
-
+    @the_step = Step.find(params[:id])
     render({ :template => "step_templates/show" })
   end
 
   def create
-    the_step = Step.new
-    the_step.recipe_id = params.fetch("query_recipe_id")
-    the_step.position = params.fetch("query_position")
-    the_step.instruction = params.fetch("query_instruction")
+    the_step = Step.new(step_params)
 
-    if the_step.valid?
-      the_step.save
-      redirect_to("/steps", { :notice => "Step created successfully." })
+    if the_step.save
+      redirect_to steps_path, notice: "Step created successfully."
     else
-      redirect_to("/steps", { :alert => the_step.errors.full_messages.to_sentence })
+      redirect_to steps_path, alert: the_step.errors.full_messages.to_sentence
     end
   end
 
   def update
-    the_id = params.fetch("path_id")
-    the_step = Step.where({ :id => the_id }).at(0)
+    @the_step = Step.find(params[:id])
 
-    the_step.recipe_id = params.fetch("query_recipe_id")
-    the_step.position = params.fetch("query_position")
-    the_step.instruction = params.fetch("query_instruction")
-
-    if the_step.valid?
-      the_step.save
-      redirect_to("/steps/#{the_step.id}", { :notice => "Step updated successfully." } )
+    if @the_step.update(step_params)
+      redirect_to step_path(@the_step), notice: "Step updated successfully."
     else
-      redirect_to("/steps/#{the_step.id}", { :alert => the_step.errors.full_messages.to_sentence })
+      redirect_to step_path(@the_step), alert: @the_step.errors.full_messages.to_sentence
     end
   end
 
   def destroy
-    the_id = params.fetch("path_id")
-    the_step = Step.where({ :id => the_id }).at(0)
+    @the_step = Step.find(params[:id])
+    @the_step.destroy
+    redirect_to steps_path, notice: "Step deleted successfully."
+  end
 
-    the_step.destroy
+  private
 
-    redirect_to("/steps", { :notice => "Step deleted successfully." } )
+  def step_params
+    params.require(:step).permit(:recipe_id, :position, :instruction)
   end
 end

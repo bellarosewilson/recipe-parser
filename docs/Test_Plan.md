@@ -43,12 +43,12 @@
 
 ## 2. Landing Page Tests
 
-- [ ] Non-logged-in users see landing page at `/`
-- [ ] Logged-in users redirect from `/` to `/recipes`
+- [ x] Non-logged-in users see landing page at `/`
+- [ x] Logged-in users redirect from `/` to `/recipes`
 - [ ] All CTA buttons link correctly
 - [ ] Navigation works (Sign Up, Sign In)
-- [ ] Responsive on mobile/tablet/desktop
-- [ ] Features section displays correctly
+- [ x] Responsive on mobile/tablet/desktop
+- [ x] Features section displays correctly
 
 ---
 
@@ -56,31 +56,32 @@
 
 ### File Upload
 
-- [ ] Upload .jpg image → Accepted
-- [ ] Upload .png image → Accepted
-- [ ] Upload file > 10MB → Rejected with error
-- [ ] Upload corrupted file → Error handled gracefully
+- [x ] Upload .jpg image → Accepted
+- [ x] Upload .png image → Accepted
+- [ x] Upload file > 10MB → Rejected with error
+- [x ] Upload corrupted file → Error handled gracefully
 
 ### AI Parsing
 
-- [ ] Image recipe parsed → Correct title extracted
-- [ ] Image recipe parsed → Ingredients extracted with amounts/units
-- [ ] Image recipe parsed → Steps extracted in order
+- [ x] Image recipe parsed → Correct title extracted
+- [x ] Image recipe parsed → Ingredients extracted with amounts/units
+- [ x] Image recipe parsed → Steps extracted in order
 - [ ] Complex recipe (20+ ingredients) → Parsed correctly (stretch goal)
 - [ ] Recipe with special characters → Handled correctly (stretch goal)
 
 ### Upload Flow
 
-- [ ] File uploads to AWS S3 → URL returned
-- [ ] Loading state shown during parsing
-- [ ] Parsed data displayed for review
-- [ ] User can edit title before saving
-- [ ] User can edit ingredients before saving
-- [ ] User can edit steps before saving
-- [ ] User can add missing ingredients
-- [ ] User can add missing steps
-- [ ] Recipe saves with all data to database
-- [ ] Redirect to recipe show page after save
+- [x ] File uploads to AWS S3 → URL returned
+- [ x] Loading state shown during parsing
+- [ x] Parsed data displayed for review
+- [ x] User can edit title before saving
+- [x ] User can edit ingredients before saving
+- [ x] User can edit steps before saving
+- [ x] User can add missing ingredients
+- [x ] User can add missing steps
+- [ x] Recipe saves with all data to database
+- [ x] Redirect to recipe show page after save
+- [x ] User can reparse recipe if easier than edting, optional (stretch goal)
 
 ---
 
@@ -88,38 +89,38 @@
 
 ### Index Page
 
-- [ ] All user's recipes displayed
-- [ ] Recipe cards show title, ingredient count, date
+- [ x] All user's recipes displayed
+- [ x] Recipe cards show title, ingredient count, date
 - [ ] Pagination works (if 12+ recipes)
 - [ ] Search by recipe name works
-- [ ] "Upload New Recipe" button visible
+- [x ] "Upload New Recipe" button visible
 
 ### Show Page
 
-- [ ] Recipe title displayed
-- [ ] All ingredients listed correctly
-- [ ] All steps listed in order (1, 2, 3...)
-- [ ] "View Original File" link works
-- [ ] Edit and Delete buttons visible
+- [ x] Recipe title displayed
+- [ x] All ingredients listed correctly
+- [x ] All steps listed in order (1, 2, 3...)
+- [ x] "View Original File" link works
+- [ x] Edit and Delete buttons visible
 - [ ] Breadcrumbs navigation works
 
 ### Edit Recipe
 
-- [ ] Can edit recipe title
-- [ ] Can add new ingredient
-- [ ] Can edit existing ingredient
-- [ ] Can delete ingredient
-- [ ] Can add new step
-- [ ] Can edit existing step
-- [ ] Can delete step
-- [ ] Changes save correctly
-- [ ] Cannot change original uploaded file
+- [ x] Can edit recipe title
+- [ x] Can add new ingredient
+- [x ] Can edit existing ingredient
+- [ x] Can delete ingredient
+- [ x] Can add new step
+- [ x] Can edit existing step
+- [ x] Can delete step
+- [ x] Changes save correctly
+- [ x] Cannot change original uploaded file
 
 ### Delete Recipe
 
-- [ ] Delete button shows confirmation
-- [ ] Confirm delete → Recipe removed
-- [ ] Cancel delete → Recipe remains
+- [x ] Delete button shows confirmation
+- [ x] Confirm delete → Recipe removed
+- [ x] Cancel delete → Recipe remains
 
 ---
 
@@ -181,11 +182,6 @@
 - [ ] File upload works
 - [ ] All buttons tappable
 
-### Tablet (768px width)
-
-- [ ] Layout adjusts appropriately
-- [ ] Navigation works
-- [ ] Recipe grid displays correctly
 
 ### Desktop (1200px+ width)
 
@@ -208,8 +204,8 @@
 
 - [ ] Very long step (1000+ characters)
 - [ ] Simultaneous uploads from same user
-- [ ] Poor network connection (slow upload)
-- [ ] Session timeout during upload
+- [ x] Poor network connection (slow upload)
+- [ x] Session timeout during upload
 - [ ] Duplicate recipe titles
 
 ---

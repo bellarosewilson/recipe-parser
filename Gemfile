@@ -29,7 +29,6 @@ gem "kaminari"           # Pagination
 gem "pundit"             # Authorization
 gem "factory_bot_rails"  # Test factories (move from development to development/test group)
 gem 'ruby_llm'
-gem 'bootstrap', '~> 5.3.8' 
 gem 'jquery-rails' 
 gem 'autoprefixer-rails' # PostCSS autoprefixer for CSS compatibility
 
@@ -67,4 +66,3 @@ group :test do
   gem "webmock"                       # Mock HTTP requests in tests
 end
 
-gem "dartsass-rails", "~> 0.5.1"
