@@ -9,8 +9,8 @@ class ApplicationController < ActionController::Base
   private
 
   def configure_permitted_parameters
-    devise_parameter_sanitizer.permit(:sign_up, keys: [:preferred_units])
-    devise_parameter_sanitizer.permit(:account_update, keys: [:preferred_units])
+    devise_parameter_sanitizer.permit(:sign_up, keys: [ :preferred_units ])
+    devise_parameter_sanitizer.permit(:account_update, keys: [ :preferred_units ])
   end
 
   def user_not_authorized

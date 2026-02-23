@@ -11,7 +11,7 @@
 #
 class Recipe < ApplicationRecord
   scope :recent, -> { order(created_at: :desc) }
-  
+
   belongs_to :author, required: true, class_name: "User", foreign_key: "author_id"
 
   has_many :recipe_ingredients, class_name: "Ingredient", foreign_key: "recipe_id", dependent: :destroy
@@ -36,12 +36,12 @@ class Recipe < ApplicationRecord
       recipe_ingredients_attributes: parsed_data[:ingredients],
       steps_attributes: parsed_data[:steps],
     )
-    return [true, nil] if ok
+    return [ true, nil ] if ok
 
     errors = errors.full_messages.to_a
     recipe_ingredients.each { |i| errors.concat(i.errors.full_messages) }
     steps.each { |s| errors.concat(s.errors.full_messages) }
-    [false, errors.uniq]
+    [ false, errors.uniq ]
   end
 
   def parse_original_image(preferred_units: "metric")

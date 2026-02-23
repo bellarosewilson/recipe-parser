@@ -28,9 +28,9 @@ gem "tailwindcss-rails", "~> 3.3.1" # Tailwind CSS integration for Rails, pinnin
 gem "kaminari"           # Pagination
 gem "pundit"             # Authorization
 gem "factory_bot_rails"  # Test factories (move from development to development/test group)
-gem 'ruby_llm'
-gem 'jquery-rails' 
-gem 'autoprefixer-rails' # PostCSS autoprefixer for CSS compatibility
+gem "ruby_llm"
+gem "jquery-rails"
+gem "autoprefixer-rails" # PostCSS autoprefixer for CSS compatibility
 
 group :development, :test do
   gem "debug", platforms: %i[mri windows], require: "debug/prelude" # Ruby debugger
@@ -65,4 +65,3 @@ group :test do
   gem "shoulda-matchers", "~> 6.4"    # One-liner tests for common patterns
   gem "webmock"                       # Mock HTTP requests in tests
 end
-
