@@ -10,8 +10,10 @@
 #  author_id  :integer
 #
 class Recipe < ApplicationRecord
-  scope :recent, -> { order(created_at: :desc) }
+  include Commentable
   
+  scope :recent, -> { order(created_at: :desc) }
+
   belongs_to :author, required: true, class_name: "User", foreign_key: "author_id"
 
   has_many :recipe_ingredients, class_name: "Ingredient", foreign_key: "recipe_id", dependent: :destroy
@@ -25,6 +27,7 @@ class Recipe < ApplicationRecord
   def self.ransackable_attributes(auth_object = nil)
     %w[author_id created_at id source_url title updated_at]
   end
+
   # For User to be able to delete ingredeients/steps when editing/reviewing recipe
   accepts_nested_attributes_for :recipe_ingredients, allow_destroy: true
   accepts_nested_attributes_for :steps, allow_destroy: true

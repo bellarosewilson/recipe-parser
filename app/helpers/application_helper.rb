@@ -1,15 +1,15 @@
 module ApplicationHelper
   def preferred_unit_options
     [
-      ["Metric (g, ml, °C)", "metric"],
-      ["Imperial (oz, cups, °F)", "imperial"]
+      [ "Metric (g, ml, °C)", "metric" ],
+      [ "Imperial (oz, cups, °F)", "imperial" ]
     ]
   end
 
   def breadcrumb_items
-    return [{ label: "Home", path: nil }] if controller_name == "pages" && action_name == "home"
+    return [ { label: "Home", path: nil } ] if controller_name == "pages" && action_name == "home"
 
-    items = [{ label: "Home", path: root_path }]
+    items = [ { label: "Home", path: root_path } ]
     case controller_name
     when "recipes"
       items << { label: "Recipes", path: recipes_path }

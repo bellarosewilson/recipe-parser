@@ -1,0 +1,20 @@
+<%# Polymorphic comments: commentable can be Recipe or Step (same Comment model). %>
+<div class="card shadow-sm mt-4">
+  <div class="card-header bg-white">
+    <h2 class="h6 mb-0">Notes</h2>
+  </div>
+  <div class="card-body">
+    <ul class="list-group list-group-flush list-unstyled mb-3">
+      <% comments.each do |comment| %>
+        <li class="list-group-item px-0">
+          <span class="text-muted small"><%= comment.user.display_name %></span>
+          <p class="mb-0"><%= comment.body %></p>
+        </li>
+      <% end %>
+    </ul>
+    <%= form_with url: commentable.is_a?(Recipe) ? recipe_comments_path(commentable) : step_comments_path(commentable), method: :post, local: true do |f| %>
+      <%= f.text_area :body, name: "comment[body]", class: "form-control form-control-sm mb-2", rows: 2, placeholder: "Add a Note...", maxlength: 2000, required: true %>
+      <%= f.submit "Post Note", class: "btn btn-sm btn-outline-primary" %>
+    <% end %>
+  </div>
+</div>

@@ -46,7 +46,7 @@ module OpenAiParser
       {
         title: normalize_title(data["title"]),
         ingredients: indexed_attributes(normalize_ingredients(data["ingredients"])),
-        steps: indexed_attributes(normalize_steps(data["steps"])),
+        steps: indexed_attributes(normalize_steps(data["steps"]))
       }
     ensure
       @tempfile&.close
@@ -74,7 +74,7 @@ module OpenAiParser
     end
 
     def blob_to_tempfile(blob)
-      @tempfile = Tempfile.new(["recipe_image", blob.filename.extension_with_delimiter])
+      @tempfile = Tempfile.new([ "recipe_image", blob.filename.extension_with_delimiter ])
       @tempfile.binmode
       blob.download { |chunk| @tempfile.write(chunk) }
       @tempfile.rewind
@@ -94,7 +94,7 @@ module OpenAiParser
         {
           amount: item["amount"].to_s.strip.presence || "—",
           name: item["name"].to_s.strip.presence || "—",
-          unit: item["unit"].to_s.strip.presence || "—",
+          unit: item["unit"].to_s.strip.presence || "—"
         }
       end.compact
     end
@@ -113,7 +113,7 @@ module OpenAiParser
 
     # Rails nested attributes expect indexed hash: { "0" => {...}, "1" => {...} }
     def indexed_attributes(array_of_hashes)
-      array_of_hashes.each_with_index.to_h { |attrs, i| [i.to_s, attrs] }
+      array_of_hashes.each_with_index.to_h { |attrs, i| [ i.to_s, attrs ] }
     end
   end
 end

@@ -25,6 +25,7 @@ class User < ApplicationRecord
          :recoverable, :rememberable, :validatable
 
   has_many :recipes, class_name: "Recipe", foreign_key: "author_id", dependent: :destroy
+  has_many :comments, dependent: :destroy
   has_many :chats, dependent: :nullify
 
   validates :preferred_units, inclusion: { in: %w[metric imperial] }, allow_nil: true
