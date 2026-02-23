@@ -17,7 +17,7 @@ module ApplicationHelper
       items << { label: "New recipe", path: nil } if action_name == "new"
     when "steps"
       items << { label: "Steps", path: steps_path }
-      items << { label: "Step ##{@the_step&.id}", path: nil } if action_name == "show" && @the_step.present?
+      items << { label: @the_recipe.title.presence || "Recipe", path: nil } if action_name == "show" && @the_recipe.present?
     when "ingredients"
       items << { label: "Ingredients", path: ingredients_path }
       items << { label: "Ingredient ##{@the_ingredient&.id}", path: nil } if action_name == "show" && @the_ingredient.present?
