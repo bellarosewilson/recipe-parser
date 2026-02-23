@@ -9,8 +9,8 @@
 <div class="d-flex justify-content-between align-items-center mb-4">
   <h1 class="h3 mb-0"><%= @the_recipe.title %></h1>
   <div>
-    <%= link_to "Back to list", recipes_path, class: "btn btn-outline-secondary btn-sm" %>
-    <%= button_to "Delete recipe", recipe_path(@the_recipe), method: :delete, class: "btn btn-outline-danger btn-sm", data: { turbo_confirm: "Delete this recipe?" } %>
+    <%= link_to "Back to Recipes", recipes_path, class: "btn btn-outline-secondary btn-sm" %>
+    <%= button_to "Delete Recipe", recipe_path(@the_recipe), method: :delete, class: "btn btn-outline-danger btn-sm", data: { turbo_confirm: "Delete this Recipe?" } %>
   </div>
 </div>
 
@@ -18,10 +18,10 @@
   <div class="col-lg-8">
     <% if @the_recipe.original_image.attached? %>
       <div class="card shadow-sm mb-4">
-        <%= image_tag @the_recipe.original_image, class: "card-img-top", style: "max-height: 400px; object-fit: contain; background: #f8f9fa;", alt: @the_recipe.title.presence || "Recipe image" %>
+        <%= image_tag @the_recipe.original_image, class: "card-img-top", style: "max-height: 400px; object-fit: contain; background: #f8f9fa;", alt: @the_recipe.title.presence || "Recipe Image" %>
         <% if @can_reparse_recipe %>
           <div class="card-body py-2">
-            <%= button_to "Re-parse from image", parse_recipe_path(@the_recipe), method: :post, class: "btn btn-sm btn-outline-primary", form: { data: { turbo_confirm: "Re-parse this recipe from the image?" } } %>
+            <%= button_to "Re-Parse from image", parse_recipe_path(@the_recipe), method: :post, class: "btn btn-sm btn-outline-primary", form: { data: { turbo_confirm: "Re-Parse this recipe from the image?" } } %>
           </div>
         <% end %>
       </div>
@@ -50,7 +50,7 @@
   <div class="col-lg-4">
     <div class="card shadow-sm sticky-top" style="top: 1rem;">
       <div class="card-header bg-white">
-        <h2 class="h6 mb-0">Edit recipe</h2>
+        <h2 class="h6 mb-0">Edit Recipe</h2>
       </div>
       <div class="card-body">
         <%= form_with model: @the_recipe, url: recipe_path(@the_recipe), method: :patch, local: true do |f| %>
@@ -59,7 +59,7 @@
             <%= f.text_field :title, id: "title_box", class: "form-control", required: true, maxlength: 255 %>
           </div>
           <div class="mb-3">
-            <%= f.label :source_url, "Source URL", class: "form-label" %>
+            <%= f.label :source_url, "Recipe URL", class: "form-label" %>
             <%= f.url_field :source_url, id: "source_url_box", class: "form-control" %>
           </div>
           <%= f.submit "Update recipe", class: "btn btn-primary w-100" %>
