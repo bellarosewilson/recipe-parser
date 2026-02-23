@@ -1,0 +1,13 @@
+<div class="card shadow-sm mb-4">
+  <div class="card-header bg-white">
+    <h2 class="h6 mb-0">Steps</h2>
+  </div>
+  <ol class="list-group list-group-flush list-group-numbered">
+    <% recipe.steps.each do |step| %>
+      <li class="list-group-item"><%= step.instruction %></li>
+    <% end %>
+    <% if recipe.steps.none? %>
+      <li class="list-group-item text-muted">No steps yet.</li>
+    <% end %>
+  </ol>
+</div>
