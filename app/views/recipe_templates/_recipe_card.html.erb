@@ -9,7 +9,7 @@
     <% end %>
     <div class="card-body d-flex flex-column">
       <h3 class="card-title h6"><%= recipe.title %></h3>
-      <%= link_to "View recipe", recipe_path(recipe), class: "btn btn-outline-primary btn-sm mt-auto" %>
+      <%= link_to "View recipe", recipe_path(recipe), class: "btn btn-outline-primary btn-sm mt-auto", data: { turbo_frame: "_top" } %>
     </div>
   </div>
 </div>
