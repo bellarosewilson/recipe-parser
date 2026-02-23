@@ -28,6 +28,7 @@ class RecipesController < ApplicationController
     @recipe = Recipe.find(params[:id])
     if @recipe.parse_original_image(preferred_units: recipe_author.preferred_units)
       RecipeMailer.parse_confirmation(@recipe, recipe_author).deliver_later
+      broadcast_recipe_event(@recipe, "parsed")
       redirect_to recipe_path(@recipe), notice: "Recipe parsed successfully from image."
     else
       redirect_to recipe_path(@recipe), alert: "Could not parse recipe (no image attached?)."
@@ -37,9 +38,16 @@ class RecipesController < ApplicationController
   def update
     @the_recipe = Recipe.find(params[:id])
     if @the_recipe.update(recipe_params)
-      redirect_to recipe_path(@the_recipe), notice: "Recipe updated successfully."
+      broadcast_recipe_event(@the_recipe, "updated", payload: recipe_json(@the_recipe))
+      respond_to do |format|
+        format.html { redirect_to recipe_path(@the_recipe), notice: "Recipe updated successfully." }
+        format.json { render json: { recipe: recipe_json(@the_recipe) }, status: :ok }
+      end
     else
-      redirect_to recipe_path(@the_recipe), alert: @the_recipe.errors.full_messages.to_sentence
+      respond_to do |format|
+        format.html { redirect_to recipe_path(@the_recipe), alert: @the_recipe.errors.full_messages.to_sentence }
+        format.json { render json: { errors: @the_recipe.errors.full_messages }, status: :unprocessable_entity }
+      end
     end
   end
 
@@ -59,5 +67,16 @@ class RecipesController < ApplicationController
     p = params.require(:recipe).permit(:title, :source_url)
     p[:author_id] = recipe_author.id
     p
+  end
+
+  def broadcast_recipe_event(recipe, event, payload: {})
+    RecipeChannel.broadcast_to(
+      recipe,
+      { event: event, **payload }.stringify_keys
+    )
+  end
+
+  def recipe_json(recipe)
+    { id: recipe.id, title: recipe.title, source_url: recipe.source_url }
   end
 end

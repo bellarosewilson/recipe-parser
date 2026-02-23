@@ -6,10 +6,10 @@
   <%= tag.meta property: "og:type", content: "website" %>
 <% end %>
 
-<div class="d-flex justify-content-between align-items-center mb-4">
-  <h1 class="h3 mb-0"><%= @the_recipe.title %></h1>
+<div class="d-flex justify-content-between align-items-center mb-4" data-controller="recipe-channel" data-recipe-channel-recipe-id-value="<%= @the_recipe.id %>">
+  <h1 class="h3 mb-0" id="recipe_title_display"><%= @the_recipe.title %></h1>
   <div>
-    <%= link_to "Back to Recipes", recipes_path, class: "btn btn-outline-secondary btn-sm" %>
+    <%= link_to "Back to List", recipes_path, class: "btn btn-outline-secondary btn-sm" %>
     <%= button_to "Delete Recipe", recipe_path(@the_recipe), method: :delete, class: "btn btn-outline-danger btn-sm", data: { turbo_confirm: "Delete this Recipe?" } %>
   </div>
 </div>
@@ -21,7 +21,7 @@
         <%= image_tag @the_recipe.original_image, class: "card-img-top", style: "max-height: 400px; object-fit: contain; background: #f8f9fa;", alt: @the_recipe.title.presence || "Recipe Image" %>
         <% if @can_reparse_recipe %>
           <div class="card-body py-2">
-            <%= button_to "Re-Parse from image", parse_recipe_path(@the_recipe), method: :post, class: "btn btn-sm btn-outline-primary", form: { data: { turbo_confirm: "Re-Parse this recipe from the image?" } } %>
+            <%= button_to "Re-Parse from Image", parse_recipe_path(@the_recipe), method: :post, class: "btn btn-sm btn-outline-primary", form: { data: { turbo_confirm: "Re-Parse this Recipe from the Image?" } } %>
           </div>
         <% end %>
       </div>
@@ -32,12 +32,16 @@
         <dl class="row mb-0">
           <dt class="col-sm-3 text-muted">Title</dt>
           <dd class="col-sm-9"><%= @the_recipe.title %></dd>
-          <dt class="col-sm-3 text-muted">Author</dt>
+          <dt class="col-sm-3 text-muted">User</dt>
           <dd class="col-sm-9"><%= @the_recipe.author.display_name %></dd>
-          <% if @the_recipe.source_url.present? %>
-            <dt class="col-sm-3 text-muted">Source</dt>
-            <dd class="col-sm-9"><%= link_to @the_recipe.source_url, @the_recipe.source_url, target: "_blank", rel: "noopener" %></dd>
-          <% end %>
+          <dt class="col-sm-3 text-muted" id="recipe_source_dt"<%= raw(' style="display:none"') if @the_recipe.source_url.blank? %>>Source</dt>
+          <dd class="col-sm-9" id="recipe_source_dd"<%= raw(' style="display:none"') if @the_recipe.source_url.blank? %>>
+            <% if @the_recipe.source_url.present? %>
+              <%= link_to @the_recipe.source_url, @the_recipe.source_url, id: "recipe_source_display", target: "_blank", rel: "noopener" %>
+            <% else %>
+              <a id="recipe_source_display" href="#" style="display: none;"></a>
+            <% end %>
+          </dd>
         </dl>
       </div>
     </div>
@@ -52,8 +56,8 @@
       <div class="card-header bg-white">
         <h2 class="h6 mb-0">Edit Recipe</h2>
       </div>
-      <div class="card-body">
-        <%= form_with model: @the_recipe, url: recipe_path(@the_recipe), method: :patch, local: true do |f| %>
+      <div class="card-body" data-controller="ajax-recipe-form">
+        <%= form_with model: @the_recipe, url: recipe_path(@the_recipe), method: :patch, local: false, data: { turbo: false } do |f| %>
           <div class="mb-3">
             <%= f.label :title, "Title", class: "form-label" %>
             <%= f.text_field :title, id: "title_box", class: "form-control", required: true, maxlength: 255 %>
@@ -62,9 +66,12 @@
             <%= f.label :source_url, "Recipe URL", class: "form-label" %>
             <%= f.url_field :source_url, id: "source_url_box", class: "form-control" %>
           </div>
-          <%= f.submit "Update recipe", class: "btn btn-primary w-100" %>
+          <p class="small mb-2" data-ajax-recipe-form-target="message"></p>
+          <%= f.submit "Update recipe", class: "btn btn-primary w-100", data: { ajax_recipe_form_target: "submit" } %>
         <% end %>
       </div>
     </div>
+
+    <%= render "recipe_templates/comments", commentable: @the_recipe, comments: @the_recipe.comments.includes(:user).order(created_at: :asc) %>
   </div>
 </div>
