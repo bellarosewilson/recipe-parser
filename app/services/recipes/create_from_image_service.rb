@@ -27,6 +27,7 @@ module Recipes
       ok, errors = recipe.apply_parsed_data(parsed_data)
 
       if ok
+        RecipeMailer.parse_confirmation(recipe, @author).deliver_later
         Result.new(success?: true, recipe: recipe, redirect_path: recipe_path(recipe), notice: "Recipe created successfully.")
       else
         Result.new(
