@@ -109,6 +109,15 @@ Use the log tester script to confirm your API key and parser setup.
 <img width="696" height="532" alt="Recipe Parser- ERD" src="https://github.com/user-attachments/assets/825d08ce-8ca3-41fb-a2e4-d94a4b64a998" />
 
 ---
+### Email Notification (Configuration)
+
+Parse confirmation emails are sent after a recipe is created or re-parsed. In development, mail is logged (no SMTP). For production you need to configure delivery:
+
+1. Set `config.action_mailer.default_url_options = { host: "your-production-host.com" }` in `config/environments/production.rb` (and use HTTPS if applicable).
+2. Configure SMTP (or another delivery method): uncomment and set `config.action_mailer.smtp_settings` in production.rb, or use credentials (e.g. `smtp:` with `user_name`, `password`, `address`, `port`). Many hosts (e.g. Render, Heroku) provide SMTP add-ons or env vars for this.
+
+Without SMTP in production, emails will not be sent; the app will still work and jobs will enqueue.
+---
 
 ## Contributing
 
