@@ -66,27 +66,27 @@
   </header>
 
   <%= form_with model: @the_ingredient, url: ingredient_path(@the_ingredient), method: :patch do |f| %>
-    <div>
-      <%= f.label :recipe_id, "Recipe" %>
-      <%= f.number_field :recipe_id %>
+    <div class="mb-3">
+      <%= f.label :recipe_id, "Recipe", class: "form-label" %>
+      <%= f.number_field :recipe_id, class: "form-control", required: true %>
     </div>
 
-    <div>
-      <%= f.label :unit, "Unit" %>
-      <%= f.text_field :unit %>
+    <div class="mb-3">
+      <%= f.label :unit, "Unit", class: "form-label" %>
+      <%= f.text_field :unit, class: "form-control", required: true, maxlength: 255 %>
     </div>
 
-    <div>
-      <%= f.label :amount, "Amount" %>
-      <%= f.text_field :amount %>
+    <div class="mb-3">
+      <%= f.label :amount, "Amount", class: "form-label" %>
+      <%= f.text_field :amount, class: "form-control", required: true, maxlength: 255 %>
     </div>
 
-    <div>
-      <%= f.label :name, "Name" %>
-      <%= f.text_field :name %>
+    <div class="mb-3">
+      <%= f.label :name, "Name", class: "form-label" %>
+      <%= f.text_field :name, class: "form-control", required: true, maxlength: 255 %>
     </div>
 
-    <%= f.submit "Update ingredient" %>
+    <%= f.submit "Update ingredient", class: "btn btn-primary" %>
   <% end %>
 </article>
 
