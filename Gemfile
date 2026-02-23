@@ -24,7 +24,6 @@ gem "aws-sdk-s3", require: false  # AWS S3 integration for file uploads
 gem "mini_magick" # Image processing for uploaded files
 gem "httparty" # Simplified HTTP requests for API interactions
 gem "image_processing" # High-level image processing interface
-gem "tailwindcss-rails", "~> 3.3.1" # Tailwind CSS integration for Rails, pinning old versiion for compatibility with Rails 8
 gem "kaminari"           # Pagination
 gem "pundit"             # Authorization
 gem "factory_bot_rails"  # Test factories (move from development to development/test group)
