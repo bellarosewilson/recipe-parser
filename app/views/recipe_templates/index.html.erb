@@ -16,7 +16,7 @@
     <div class="col">
       <div class="card h-100 shadow-sm">
         <% if recipe.original_image.attached? %>
-          <%= image_tag recipe.original_image, class: "card-img-top", style: "object-fit: cover; height: 180px;" %>
+          <%= image_tag recipe.original_image, class: "card-img-top", style: "object-fit: cover; height: 180px;", alt: recipe.title.presence || "Recipe image" %>
         <% else %>
           <div class="card-img-top bg-secondary d-flex align-items-center justify-content-center text-white" style="height: 180px;">
             <span>No image</span>
