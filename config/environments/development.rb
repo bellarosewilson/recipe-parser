@@ -1,6 +1,15 @@
 require "active_support/core_ext/integer/time"
 
 Rails.application.configure do
+  # Bullet: detect N+1 queries in development
+  config.after_initialize do
+    Bullet.enable = true
+    Bullet.alert = false
+    Bullet.bullet_logger = true
+    Bullet.console = true
+    Bullet.rails_logger = true
+  end
+
   # Allow server to be hosted on any URL
   config.hosts.clear
   # Allow better_errors to work in online IDE
@@ -43,6 +52,9 @@ Rails.application.configure do
 
   # Don't care if the mailer can't send.
   config.action_mailer.raise_delivery_errors = false
+
+  # Deliver mail to log (no SMTP needed in development).
+  config.action_mailer.delivery_method = :log
 
   # Make template changes take effect immediately.
   config.action_mailer.perform_caching = false

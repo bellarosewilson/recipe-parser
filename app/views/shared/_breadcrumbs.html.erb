@@ -1,0 +1,16 @@
+<% items = breadcrumb_items %>
+<% if items.any? %>
+  <nav aria-label="breadcrumb" class="mb-3">
+    <ol class="breadcrumb mb-0">
+      <% items.each_with_index do |item, index| %>
+        <li class="breadcrumb-item<%= " active" if item[:path].nil? %>" <%= "aria-current=\"page\"" if item[:path].nil? && index == items.size - 1 %>>
+          <% if item[:path].present? %>
+            <%= link_to item[:label], item[:path], class: "text-decoration-none" %>
+          <% else %>
+            <%= item[:label] %>
+          <% end %>
+        </li>
+      <% end %>
+    </ol>
+  </nav>
+<% end %>

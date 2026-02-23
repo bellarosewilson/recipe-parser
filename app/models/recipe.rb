@@ -22,6 +22,9 @@ class Recipe < ApplicationRecord
   validates :title, presence: true
   validates :author_id, presence: true
 
+  def self.ransackable_attributes(auth_object = nil)
+    %w[author_id created_at id source_url title updated_at]
+  end
   # For User to be able to delete ingredeients/steps when editing/reviewing recipe
   accepts_nested_attributes_for :recipe_ingredients, allow_destroy: true
   accepts_nested_attributes_for :steps, allow_destroy: true

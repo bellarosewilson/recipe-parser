@@ -1,0 +1,13 @@
+<div class="card shadow-sm mb-4">
+  <div class="card-header bg-white">
+    <h2 class="h6 mb-0">Ingredients</h2>
+  </div>
+  <ul class="list-group list-group-flush">
+    <% recipe.recipe_ingredients.each do |ingredient| %>
+      <li class="list-group-item"><%= ingredient.name %><% if ingredient.amount.present? || ingredient.unit.present? %> — <%= [ingredient.amount, ingredient.unit].compact.join(" ") %><% end %></li>
+    <% end %>
+    <% if recipe.recipe_ingredients.none? %>
+      <li class="list-group-item text-muted">No ingredients yet.</li>
+    <% end %>
+  </ul>
+</div>

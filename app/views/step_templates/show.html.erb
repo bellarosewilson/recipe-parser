@@ -59,22 +59,22 @@
   </header>
 
   <%= form_with model: @the_step, url: step_path(@the_step), method: :patch do |f| %>
-    <div>
-      <%= f.label :recipe_id, "Recipe" %>
-      <%= f.number_field :recipe_id %>
+    <div class="mb-3">
+      <%= f.label :recipe_id, "Recipe", class: "form-label" %>
+      <%= f.number_field :recipe_id, class: "form-control", required: true %>
     </div>
 
-    <div>
-      <%= f.label :position, "Position" %>
-      <%= f.text_field :position %>
+    <div class="mb-3">
+      <%= f.label :position, "Position", class: "form-label" %>
+      <%= f.text_field :position, class: "form-control", required: true %>
     </div>
 
-    <div>
-      <%= f.label :instruction, "Instruction" %>
-      <%= f.text_field :instruction %>
+    <div class="mb-3">
+      <%= f.label :instruction, "Instruction", class: "form-label" %>
+      <%= f.text_field :instruction, class: "form-control", required: true, maxlength: 2000 %>
     </div>
 
-    <%= f.submit "Update step" %>
+    <%= f.submit "Update step", class: "btn btn-primary" %>
   <% end %>
 </article>
 

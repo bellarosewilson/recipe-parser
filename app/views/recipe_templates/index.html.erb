@@ -10,23 +10,22 @@
   </div>
 </div>
 
+<%= search_form_for @q, url: recipes_path, method: :get, class: "mb-4" do |f| %>
+  <div class="input-group" style="max-width: 24rem;">
+    <%= f.search_field :title_cont, class: "form-control", placeholder: "Search recipes by title..." %>
+    <%= f.submit "Search", class: "btn btn-outline-secondary" %>
+  </div>
+<% end %>
+
 <h2 class="h5 text-muted mb-3">Your recipes</h2>
-<div class="row row-cols-1 row-cols-md-2 row-cols-lg-3 g-4">
-  <% @list_of_recipes.each do |recipe| %>
-    <div class="col">
-      <div class="card h-100 shadow-sm">
-        <% if recipe.original_image.attached? %>
-          <%= image_tag recipe.original_image, class: "card-img-top", style: "object-fit: cover; height: 180px;" %>
-        <% else %>
-          <div class="card-img-top bg-secondary d-flex align-items-center justify-content-center text-white" style="height: 180px;">
-            <span>No image</span>
-          </div>
-        <% end %>
-        <div class="card-body d-flex flex-column">
-          <h3 class="card-title h6"><%= recipe.title %></h3>
-          <%= link_to "View recipe", recipe_path(recipe), class: "btn btn-outline-primary btn-sm mt-auto" %>
-        </div>
-      </div>
-    </div>
+<%= turbo_frame_tag "recipes_list" do %>
+  <% if @list_of_recipes.respond_to?(:total_count) %>
+    <p class="text-muted small mb-2"><%= page_entries_info @list_of_recipes %></p>
   <% end %>
-</div>
+  <div class="row row-cols-1 row-cols-md-2 row-cols-lg-3 g-4">
+    <% @list_of_recipes.each do |recipe| %>
+      <%= render "recipe_templates/recipe_card", recipe: recipe %>
+    <% end %>
+  </div>
+  <%= paginate @list_of_recipes %>
+<% end %>

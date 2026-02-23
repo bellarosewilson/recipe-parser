@@ -1,11 +1,12 @@
 class RecipesController < ApplicationController
   def index
-    @list_of_recipes = Recipe.recent
+    @q = Recipe.ransack(params[:q])
+    @list_of_recipes = @q.result.recent.includes(:author).page(params[:page]).per(12)
     render template: "recipe_templates/index"
   end
 
   def show
-    @the_recipe = Recipe.find(params[:id])
+    @the_recipe = Recipe.includes(:author, :recipe_ingredients, :steps).find(params[:id])
     @can_reparse_recipe = @the_recipe.original_image.attached? && (respond_to?(:current_user) && current_user == @the_recipe.author)
     render template: "recipe_templates/show"
   end
@@ -26,6 +27,7 @@ class RecipesController < ApplicationController
   def parse
     @recipe = Recipe.find(params[:id])
     if @recipe.parse_original_image(preferred_units: recipe_author.preferred_units)
+      RecipeMailer.parse_confirmation(@recipe, recipe_author).deliver_later
       redirect_to recipe_path(@recipe), notice: "Recipe parsed successfully from image."
     else
       redirect_to recipe_path(@recipe), alert: "Could not parse recipe (no image attached?)."
