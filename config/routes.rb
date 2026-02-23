@@ -7,8 +7,12 @@ Rails.application.routes.draw do
     member do
       post :parse
     end
+    resources :comments, only: [:create], module: nil
   end
 
-  resources :steps
+  resources :steps do
+    resources :comments, only: [:create], controller: "comments"
+  end
+
   resources :ingredients
 end
