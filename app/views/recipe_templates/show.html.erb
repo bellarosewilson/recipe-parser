@@ -1,3 +1,11 @@
+<% content_for :title, @the_recipe.title %>
+<% content_for :head do %>
+  <%= tag.meta name: "description", content: "#{@the_recipe.title} — Recipe with #{@the_recipe.recipe_ingredients.size} ingredients and #{@the_recipe.steps.size} steps." %>
+  <%= tag.meta property: "og:title", content: @the_recipe.title %>
+  <%= tag.meta property: "og:description", content: "#{@the_recipe.title} — Recipe with #{@the_recipe.recipe_ingredients.size} ingredients and #{@the_recipe.steps.size} steps." %>
+  <%= tag.meta property: "og:type", content: "website" %>
+<% end %>
+
 <div class="d-flex justify-content-between align-items-center mb-4">
   <h1 class="h3 mb-0"><%= @the_recipe.title %></h1>
   <div>
@@ -34,33 +42,9 @@
       </div>
     </div>
 
-    <div class="card shadow-sm mb-4">
-      <div class="card-header bg-white">
-        <h2 class="h6 mb-0">Ingredients</h2>
-      </div>
-      <ul class="list-group list-group-flush">
-        <% @the_recipe.recipe_ingredients.each do |ingredient| %>
-          <li class="list-group-item"><%= ingredient.name %><% if ingredient.amount.present? || ingredient.unit.present? %> — <%= [ingredient.amount, ingredient.unit].compact.join(" ") %><% end %></li>
-        <% end %>
-        <% if @the_recipe.recipe_ingredients.none? %>
-          <li class="list-group-item text-muted">No ingredients yet.</li>
-        <% end %>
-      </ul>
-    </div>
+    <%= render "recipe_templates/ingredients", recipe: @the_recipe %>
 
-    <div class="card shadow-sm mb-4">
-      <div class="card-header bg-white">
-        <h2 class="h6 mb-0">Steps</h2>
-      </div>
-      <ol class="list-group list-group-flush list-group-numbered">
-        <% @the_recipe.steps.each do |step| %>
-          <li class="list-group-item"><%= step.instruction %></li>
-        <% end %>
-        <% if @the_recipe.steps.none? %>
-          <li class="list-group-item text-muted">No steps yet.</li>
-        <% end %>
-      </ol>
-    </div>
+    <%= render "recipe_templates/steps", recipe: @the_recipe %>
   </div>
 
   <div class="col-lg-4">
