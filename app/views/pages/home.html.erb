@@ -1,4 +1,9 @@
-<div>
-  <h1 class="font-bold text-4xl">Recipe Parser App</h1>
-  <p>Thanks for Visiting my Recipe Parser App! Will write more copy later</p>
+<div class="text-center py-5">
+  <h1 class="display-4 fw-bold mb-3">Recipe Manager</h1>
+  <p class="lead text-muted mb-4">Upload a photo of a recipe and we’ll extract the title, ingredients-their units, and steps.</p>
+  <p class="text-muted">Thank you for visiting!</p>
+  <div class="mt-4">
+    <%= link_to "Sign up", new_user_registration_path, class: "btn btn-primary btn-lg me-2" %>
+    <%= link_to "Sign in", new_user_session_path, class: "btn btn-outline-primary btn-lg" %>
+  </div>
 </div>
