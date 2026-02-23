@@ -10,8 +10,6 @@
 #  author_id  :integer
 #
 class Recipe < ApplicationRecord
-  include Commentable
-
   scope :recent, -> { order(created_at: :desc) }
 
   belongs_to :author, required: true, class_name: "User", foreign_key: "author_id"
