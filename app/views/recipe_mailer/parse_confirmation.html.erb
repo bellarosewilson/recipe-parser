@@ -1,0 +1,15 @@
+<p>Hi <%= @user.display_name %>,</p>
+
+<p>Your recipe <strong><%= @recipe.title %></strong> has been parsed.</p>
+
+<p><strong>Summary:</strong></p>
+<ul>
+  <li><%= @ingredient_count %> ingredient(s)</li>
+  <li><%= @step_count %> step(s)</li>
+</ul>
+
+<p><%= link_to "View recipe", @recipe_url %></p>
+
+<% if @recipe.original_image.attached? %>
+  <p class="text-muted small">The original image is attached to this email.</p>
+<% end %>
