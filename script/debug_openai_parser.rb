@@ -3,13 +3,16 @@
 #
 # Or copy-paste the sections you need into `rails console`.
 
-puts "=== 1. API key present? (Rails credentials) ==="
+puts "=== 1. API key present? (ENV or Rails credentials) ==="
+from_env = ENV["OPENAI_API_KEY"]
 from_credentials = Rails.application.credentials.dig(:openai_api_key)
-key_preview = from_credentials.to_s[0..10]
-puts "  Key present? #{from_credentials.present?}"
+key_source = from_env.present? ? "ENV[OPENAI_API_KEY]" : (from_credentials.present? ? "Rails credentials" : "none")
+key_preview = (from_env || from_credentials).to_s[0..10]
+puts "  Key present? #{(from_env || from_credentials).present?}"
+puts "  Key source: #{key_source}"
 puts "  Key preview (first 11 chars): #{key_preview}..." if key_preview.length > 0
-if from_credentials.blank?
-  puts "  => Run: rails credentials:edit and add openai_api_key: sk-your-key"
+if from_env.blank? && from_credentials.blank?
+  puts "  => Set OPENAI_API_KEY in env, or run: rails credentials:edit and add openai_api_key: sk-your-key"
 else
 
 puts "\n=== 2. RubyLLM config (what the app uses) ==="

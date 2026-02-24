@@ -16,7 +16,7 @@ module Recipes
     def call
       return failure(new_recipe_path, alert: "Please choose an image to upload.") if @uploaded_file.blank?
       return failure(new_recipe_path, alert: "No user in the database. Run: rails db:seed") unless @author
-      return failure(new_recipe_path, alert: "OpenAI API key not set. Run: rails credentials:edit and add openai_api_key:") if openai_key_blank?
+      return failure(new_recipe_path, alert: "OpenAI API key not set. Set OPENAI_API_KEY (or openai_api_key in Rails credentials).") if openai_key_blank?
 
       recipe = build_recipe_with_image
       unless recipe&.persisted?
@@ -44,7 +44,7 @@ module Recipes
     private
 
     def openai_key_blank?
-      Rails.application.credentials.dig(:openai_api_key).blank?
+      ENV["OPENAI_API_KEY"].blank? && Rails.application.credentials.dig(:openai_api_key).blank?
     end
 
     def build_recipe_with_image
