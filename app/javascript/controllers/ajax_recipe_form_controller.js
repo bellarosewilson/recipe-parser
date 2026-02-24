@@ -5,7 +5,12 @@ export default class extends Controller {
   static targets = ["title", "sourceUrl", "sourceRow", "submit", "message"]
 
   connect() {
-    this.element.addEventListener("submit", this.submit.bind(this))
+    this._boundSubmit = this.submit.bind(this)
+    this.element.addEventListener("submit", this._boundSubmit)
+  }
+
+  disconnect() {
+    this.element.removeEventListener("submit", this._boundSubmit)
   }
 
   async submit(e) {

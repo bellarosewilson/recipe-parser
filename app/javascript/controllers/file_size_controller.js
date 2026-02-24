@@ -6,7 +6,14 @@ export default class extends Controller {
   static targets = ["input", "message", "submit"]
 
   connect() {
-    this.inputTarget.addEventListener("change", this.validate.bind(this))
+    this._boundValidate = this.validate.bind(this)
+    this.inputTarget.addEventListener("change", this._boundValidate)
+  }
+
+  disconnect() {
+    if (this.hasInputTarget) {
+      this.inputTarget.removeEventListener("change", this._boundValidate)
+    }
   }
 
   validate() {
