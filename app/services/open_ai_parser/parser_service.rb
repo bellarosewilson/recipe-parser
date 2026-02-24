@@ -1,9 +1,5 @@
 module OpenAiParser
   class ParserService
-    # Resize images larger than this before sending to OpenAI (saves memory on 512MB tier)
-    MAX_IMAGE_BYTES_BEFORE_RESIZE = 2 * 1024 * 1024  # 2MB
-    MAX_IMAGE_DIMENSION = 1200
-
     RECIPE_JSON_PROMPT = <<~PROMPT
       Look at this recipe image and extract the recipe data.
 
@@ -81,11 +77,7 @@ module OpenAiParser
     def blob_to_tempfile(blob)
       @tempfile = Tempfile.new([ "recipe_image", blob.filename.extension_with_delimiter ])
       @tempfile.binmode
-      if blob.byte_size > MAX_IMAGE_BYTES_BEFORE_RESIZE && blob.content_type.to_s.start_with?("image/")
-        blob.variant(resize_to_limit: [ MAX_IMAGE_DIMENSION, MAX_IMAGE_DIMENSION ]).processed.download { |chunk| @tempfile.write(chunk) }
-      else
-        blob.download { |chunk| @tempfile.write(chunk) }
-      end
+      blob.download { |chunk| @tempfile.write(chunk) }
       @tempfile.rewind
       @tempfile.path
     end
