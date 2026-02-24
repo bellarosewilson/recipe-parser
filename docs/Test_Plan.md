@@ -12,32 +12,32 @@
 
 ### Sign Up
 
-- [ ] Sign up with valid email/password → Success
-- [ ] Sign up with invalid email format → Error shown
-- [ ] Sign up with password < 6 chars → Error shown
-- [ ] Sign up with mismatched password confirmation → Error shown
-- [ ] Select preferred units (metric/imperial) → Saved correctly
-- [ ] Redirect to recipes index after signup
+- [x ] Sign up with valid email/password → Success
+- [ x] Sign up with invalid email format → Error shown
+- [ x] Sign up with password < 6 chars → Error shown
+- [ x] Sign up with mismatched password confirmation → Error shown
+- [ x] Select preferred units (metric/imperial) → Saved correctly
+- [ x] Redirect to recipes index after signup
 
 ### Sign In
 
-- [ ] Sign in with correct credentials → Success
-- [ ] Sign in with wrong password → Error shown
-- [ ] Sign in with non-existent email → Error shown
-- [ ] "Remember me" checkbox works
-- [ ] Redirect to recipes index after login
+- [x ] Sign in with correct credentials → Success
+- [ x] Sign in with wrong password → Error shown
+- [x ] Sign in with non-existent email → Error shown
+- [ x] "Remember me" checkbox works
+- [ x] Redirect to recipes index after login
 
 ### Sign Out
 
-- [ ] Sign out successfully
-- [ ] Redirect to landing page
-- [ ] Cannot access protected routes after signout
+- [ x] Sign out successfully
+- [ x] Redirect to landing page
+- [ x] Cannot access protected routes after signout
 
 ### Password Reset
 
-- [ ] Request password reset → Email sent
-- [ ] Click reset link → Can set new password
-- [ ] Login with new password works
+- [ x] Request password reset → Email sent
+- [ x] Click reset link → Can set new password
+- [x ] Login with new password works
 
 ---
 
@@ -45,7 +45,7 @@
 
 - [ x] Non-logged-in users see landing page at `/`
 - [ x] Logged-in users redirect from `/` to `/recipes`
-- [ ] All CTA buttons link correctly
+- [x ] All CTA buttons link correctly
 - [ ] Navigation works (Sign Up, Sign In)
 - [ x] Responsive on mobile/tablet/desktop
 - [ x] Features section displays correctly
@@ -91,8 +91,8 @@
 
 - [ x] All user's recipes displayed
 - [ x] Recipe cards show title, ingredient count, date
-- [ ] Pagination works (if 12+ recipes)
-- [ ] Search by recipe name works
+- [x ] Pagination works (if 12+ recipes)
+- [x ] Search by recipe name works
 - [x ] "Upload New Recipe" button visible
 
 ### Show Page
@@ -126,48 +126,46 @@
 
 ## 5. Search & Filtering Tests
 
-- [ ] Search by recipe name (exact match)
-- [ ] Search by recipe name (partial match)
-- [ ] Search returns correct results
-- [ ] No results message when search fails
-- [ ] Clear search works
+- [x ] Search by recipe name (exact match)
+- [x ] Search by recipe name (partial match)
+- [x ] Search returns correct results
+- [ x] No results message when search fails
+- [x ] Clear search works
 
 ---
 
 ## 6. User Profile Tests
 
-- [ ] Profile page shows user email
-- [ ] Can edit preferred units
-- [ ] Changes save successfully
-- [ ] Preferred units reflected in new recipe parsing
+- [x ] Profile page shows user email
+- x[ ] Can edit preferred units
+- [x ] Changes save successfully
+- [x ] Preferred units reflected in new recipe parsing
 
 ---
 
 ## 7. Authorization Tests
 
-- [ ] User can only see their own recipes
-- [ ] User cannot edit other user's recipes (URL manipulation)
-- [ ] User cannot delete other user's recipes (URL manipulation)
-- [ ] Unauthorized access redirects to login
-- [ ] Logged-out users redirected to landing page
+- [x ] User can only see their own recipes and those they invited
+- [x ] Unauthorized access redirects to login
+- [x ] Logged-out users redirected to landing page
 
 ---
 
 ## 8. Email Notification Tests
 
-- [ ] Confirmation email sent on recipe upload
-- [ ] Email contains recipe title
-- [ ] Email has link to recipe (link is stable, users can send link to external)
-- [ ] Email formatted correctly
+- [x ] Confirmation email sent on recipe upload
+- [x ] Email contains recipe title
+- [x ] Email has link to recipe (link is stable, users can send link to external)
+- [ x] Email formatted correctly
 
 ---
 
 ## 9. Performance Tests
 
-- [ ] Recipe index loads in < 2 seconds
-- [ ] Recipe show loads in < 1 second
-- [ ] File upload completes in < 10 seconds
-- [ ] AI parsing completes in < 30 seconds
+- [x ] Recipe index loads in < 2 seconds
+- [ x] Recipe show loads in < 1 second
+- [x ] File upload completes in < 10 seconds
+- [ x] AI parsing completes in < 30 seconds
 
 ---
 
@@ -175,12 +173,12 @@
 
 ### Mobile (375px width)
 
-- [ ] Landing page renders correctly
-- [ ] Navigation menu works
-- [ ] Recipe cards
-- [ ] Forms are usable
-- [ ] File upload works
-- [ ] All buttons tappable
+- [x ] Landing page renders correctly
+- [ x] Navigation menu works
+- [ x] Recipe cards
+- [ x] Forms are usable
+- [x ] File upload works
+- [x ] All buttons tappable
 
 
 ### Desktop (1200px+ width)
@@ -193,10 +191,9 @@
 
 ## 11. Browser Compatibility Tests
 
-- [ ] Chrome (latest)
-- [ ] Safari (latest)
-- [ ] Mobile Safari (iOS)
-- [ ] Chrome Mobile (Android)
+- [x ] Chrome (latest)
+- [x ] Safari (latest)
+- [x ] Mobile Safari (iOS)
 
 ---
 
@@ -212,13 +209,13 @@
 
 ## Test Summary
 
-**Total Tests:** 100+
-**Passed:** **_ / _**
-**Failed:** **_ / _**
-**Blocked:** **_ / _**
+**Total Tests:** 103+
+**Passed:** **_ 92 _**
+**Failed:** **_ 11 _**
+**Blocked:** **_ 3 _**
 
 **Tested By:** [BRW]
-**Date:** [On-Going]
+**Date:** [2/24/26]
 **Environment:** [Production/Staging/Development]
 ```
 
