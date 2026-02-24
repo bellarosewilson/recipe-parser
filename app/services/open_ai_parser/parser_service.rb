@@ -1,25 +1,26 @@
 module OpenAiParser
   class ParserService
-    # Resize images larger than this before sending to OpenAI (needed to save memory on Render free tier-512MB )
+    # Resize images larger than this before sending to OpenAI (saves memory on 512MB tier)
     MAX_IMAGE_BYTES_BEFORE_RESIZE = 2 * 1024 * 1024  # 2MB
     MAX_IMAGE_DIMENSION = 1200
 
     RECIPE_JSON_PROMPT = <<~PROMPT
       Look at this recipe image and extract the recipe data.
 
-      Preferred units for amounts: %<units>s — use metric (g, ml, etc.) when "metric", imperial (cups, tbsp, etc.) when "imperial".
+      IMPORTANT — Unit conversion: The user wants amounts in "%<units>s" units only. You must CONVERT all ingredient amounts to this system. For metric use g, ml, kg, etc. For imperial use cups, tbsp, tsp, oz, lb, etc. Do not keep the units as shown in the image; convert them to the user's preferred system.
 
       Return a single JSON object with exactly these keys (no other keys):
       - "title": string — the recipe name
-      - "ingredients": array of objects, each with: "amount" (string), "name" (string), "unit" (string)
-      - "steps": array of objects, each with: "position" (string: "1", "2", "3", ...), "instruction" (string — full step text)
+      - "ingredients": array of objects, each with: "amount" (string), "name" (string), "unit" (string) — amounts and units must be in %<units>s
+      - "steps": array of objects, each with: "position" (string: "1", "2", "3", ...), "instruction" (string — full step text; you may keep step text as written or convert measurements in steps to %<units>s for consistency)
 
       Use valid JSON only. No markdown, no code fences.
     PROMPT
 
     def initialize(image_source, preferred_units = nil)
       @image_source = image_source
-      @preferred_units = preferred_units.presence || "metric"
+      normalized = preferred_units.to_s.strip.downcase
+      @preferred_units = %w[metric imperial].include?(normalized) ? normalized : "metric"
     end
 
     def parse_recipe
@@ -29,7 +30,7 @@ module OpenAiParser
       prompt = format(RECIPE_JSON_PROMPT, units: @preferred_units)
 
       chat = RubyLLM.chat(model: vision_model)
-        .with_instructions("You are a precise recipe extractor. Return only valid JSON with the exact keys requested.")
+        .with_instructions("You are a precise recipe extractor. Return only valid JSON with the exact keys requested. Convert all ingredient amounts and units to the user's preferred system (metric or imperial); do not simply transcribe what is written in the image.")
         .with_temperature(0.2)
         .with_params(response_format: { type: "json_object" })
 
