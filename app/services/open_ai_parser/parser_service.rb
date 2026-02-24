@@ -1,5 +1,9 @@
 module OpenAiParser
   class ParserService
+    # Resize images larger than this before sending to OpenAI (needed to save memory on Render free tier-512MB )
+    MAX_IMAGE_BYTES_BEFORE_RESIZE = 2 * 1024 * 1024  # 2MB
+    MAX_IMAGE_DIMENSION = 1200
+
     RECIPE_JSON_PROMPT = <<~PROMPT
       Look at this recipe image and extract the recipe data.
 
@@ -56,8 +60,8 @@ module OpenAiParser
     private
 
     def vision_model
-      # Prefer a vision-capable model; gpt-4o and gpt-4o-mini support images and analysis
-      "gpt-4o"
+      # gpt-4o-mini uses less memory and works on Render free tier (512MB); use ENV to override
+      ENV.fetch("OPENAI_PARSER_MODEL", "gpt-4o-mini").presence || "gpt-4o-mini"
     end
 
     def resolve_image_ref
@@ -76,7 +80,11 @@ module OpenAiParser
     def blob_to_tempfile(blob)
       @tempfile = Tempfile.new([ "recipe_image", blob.filename.extension_with_delimiter ])
       @tempfile.binmode
-      blob.download { |chunk| @tempfile.write(chunk) }
+      if blob.byte_size > MAX_IMAGE_BYTES_BEFORE_RESIZE && blob.content_type.to_s.start_with?("image/")
+        blob.variant(resize_to_limit: [ MAX_IMAGE_DIMENSION, MAX_IMAGE_DIMENSION ]).processed.download { |chunk| @tempfile.write(chunk) }
+      else
+        blob.download { |chunk| @tempfile.write(chunk) }
+      end
       @tempfile.rewind
       @tempfile.path
     end

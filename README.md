@@ -104,14 +104,6 @@ Use the log tester script to confirm your API key and parser setup.
    # => true
    ```
 ---
-
-## Entity Relationship Diagram
-### First Iteration
-<img width="696" height="532" alt="Recipe Parser- ERD" src="https://github.com/user-attachments/assets/825d08ce-8ca3-41fb-a2e4-d94a4b64a998" />
-
-### Final Iteration 
-![alt text](image.png)
----
 ### Email Notification (Configuration)
 
 Parse confirmation emails are sent after a recipe is created or re-parsed. In development, mail is logged (no SMTP). For production you need to configure delivery:
@@ -119,7 +111,7 @@ Parse confirmation emails are sent after a recipe is created or re-parsed. In de
 1. Set `config.action_mailer.default_url_options = { host: "your-production-host.com" }` in `config/environments/production.rb` (and use HTTPS if applicable).
 2. Configure SMTP (or another delivery method): uncomment and set `config.action_mailer.smtp_settings` in production.rb, or use credentials (e.g. `smtp:` with `user_name`, `password`, `address`, `port`). Many hosts (e.g. Render, Heroku) provide SMTP add-ons or env vars for this.
 
-### Without SMTP in production, emails will not be sent; the app will still work and jobs will enqueue.
+**Without SMTP in production, emails will not be sent; the app will still work and jobs will enqueue.**
 ---
 
 ## Contributing
@@ -144,12 +136,22 @@ Parse confirmation emails are sent after a recipe is created or re-parsed. In de
 
 ---
 
+## Entity Relationship Diagram
+### First Iteration
+<img width="696" height="532" alt="Recipe Parser- ERD" src="https://github.com/user-attachments/assets/825d08ce-8ca3-41fb-a2e4-d94a4b64a998" />
+
+### Final Iteration 
+![alt text](image.png)
+
+---
+
 ## Troubleshooting & FAQ
 
-### "Parse Failing on Deployment"
+### "Parse Failing on Deployment" (e.g. No Chat GPT 4o Model / out of memory)
 
-- Read error and follow steps based on error, if error is relatig to 'No Chat GPT 4o Model" then out of free memory storage. 
-- User will need to move to paid tier if memory issues persist and they want to host/deploy. Local works
+- **Free tier (512MB):** The app defaults to **gpt-4o-mini** for the recipe parser so it fits in Render’s free tier. Parsing should work without changes.
+- **Optional:** Set env `OPENAI_PARSER_MODEL=gpt-4o-mini` on Render to make this explicit.
+- **If you still hit memory limits:** Reduce upload size (images over 2MB are auto-resized before sending to OpenAI). Or move to a **paid Render plan** (e.g. Starter with more RAM) and then you can set `OPENAI_PARSER_MODEL=gpt-4o` for the full vision model. Local development is not limited by 512MB.
 
 ### "OpenAI API key not set"
 
