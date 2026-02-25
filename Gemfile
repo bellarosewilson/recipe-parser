@@ -15,18 +15,18 @@ gem "thruster", require: false        # HTTP caching/compression for Puma
 gem "tzinfo-data", platforms: %i[windows jruby] # Timezone data for Windows/JRuby
 gem "ransack"                         # Search and filtering
 gem "dotenv-rails"                    # Load environment variables from .env (updated for Rails 8)
-gem "http"                            # Simple HTTP client for APIs
-gem "rollbar"                         # Error tracking in production
+# gem "http"                            # Simple HTTP client for APIs — not used (RubyLLM used instead)
+# gem "rollbar"                         # Error tracking in production — not configured/used
 gem "appdev_support"                  # Learning helpers (nicer error messages, etc.)
-gem "ai-chat", "~> 0.5.4"             # AI::Chat integration via OpenAI APIs
+# gem "ai-chat", "~> 0.5.4"             # AI::Chat — not used (app uses ruby_llm)
 gem "devise" # User authentication (sign up, sign in, etc.)
 gem "aws-sdk-s3", require: false  # AWS S3 integration for file uploads
-gem "mini_magick" # Image processing for uploaded files
-gem "httparty" # Simplified HTTP requests for API interactions
-gem "image_processing" # High-level image processing interface
+# gem "mini_magick" # Image processing — only needed if you use .variant on attachments
+# gem "httparty" # Not used (RubyLLM handles API)
+# gem "image_processing" # Only needed for Active Storage image variants (resize, etc.)
 gem "kaminari"           # Pagination
 gem "pundit"             # Authorization
-gem "factory_bot_rails"  # Test factories (move from development to development/test group)
+# gem "factory_bot_rails"  # Test factories — disabled in config and not used in specs
 gem "ruby_llm"
 gem "jquery-rails"
 gem "autoprefixer-rails" # PostCSS autoprefixer for CSS compatibility
@@ -45,8 +45,8 @@ group :development do
   gem "better_errors"                 # Better error pages with console
   gem "binding_of_caller"             # Required for better_errors console
   gem "dev_toolbar", "~> 2.1.0"       # Development toolbar
-  gem "draft_generators", "~> 0.0.5"  # Beginner-friendly Rails generators
-  gem "haikunator"                    # Generate random names (for databases)
+  # gem "draft_generators", "~> 0.0.5"  # Beginner-friendly Rails generators — optional
+  # gem "haikunator"                    # Generate random names — not used in codebase
   gem "htmlbeautifier"                # Format HTML/ERB files
   gem "pry-rails"                     # Better Rails console
   gem "rails_db", "~> 2.5.0"          # Database viewer in browser
@@ -58,7 +58,7 @@ end
 
 group :test do
   gem "capybara"                      # Browser testing
-  gem "rails-controller-testing"      # Controller test helpers
+  # gem "rails-controller-testing"      # Controller test helpers — assigns/assert_template not used
   gem "rspec-html-matchers"           # HTML matchers for tests
   gem "selenium-webdriver", "~> 4.11.0" # Browser automation
   gem "shoulda-matchers", "~> 6.4"    # One-liner tests for common patterns
