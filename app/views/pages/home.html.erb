@@ -1,9 +1,104 @@
-<div class="text-center py-5">
-  <h1 class="display-4 fw-bold mb-3">Recipe Manager</h1>
-  <p class="lead text-muted mb-4">Upload a photo of a recipe and we’ll extract the title, ingredients-their units, and steps.</p>
-  <p class="text-muted">Thank you for visiting!</p>
-  <div class="mt-4">
-    <%= link_to "Sign up", new_user_registration_path, class: "btn btn-primary btn-lg me-2" %>
-    <%= link_to "Sign in", new_user_session_path, class: "btn btn-outline-primary btn-lg" %>
-  </div>
+<% content_for :head do %>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css" crossorigin="anonymous">
+  <style>
+    .landing-hero { padding: 3rem 0 3.5rem; }
+    .landing-section { padding: 2.5rem 0; }
+    .landing-feature-card { height: 100%; border: none; border-radius: 0.5rem; }
+    .landing-cta-section { padding: 3rem 0; }
+  </style>
+<% end %>
+
+<div class="landing-page">
+  <!-- Hero: Value proposition + CTA -->
+  <section class="landing-hero text-center">
+    <h1 class="display-4 fw-bold text-primary mb-3">Recipe Manager</h1>
+    <p class="lead text-dark mx-auto mb-4" style="max-width: 32rem;">
+      Turn a photo of any recipe into a structured, searchable collection. We extract the title, ingredients with units, and steps—so you can stop retyping and start cooking.
+    </p>
+    <p class="text-muted mb-4">Save Time. Reduce clutter. Keep Your Recipes in One Place.</p>
+    <div class="d-flex gap-2 justify-content-center flex-wrap">
+      <%= link_to "Get started — Sign up", new_user_registration_path, class: "btn btn-primary btn-lg px-4" %>
+      <%= link_to "Sign in", new_user_session_path, class: "btn btn-outline-primary btn-lg" %>
+    </div>
+  </section>
+
+  <!-- Target Audience -->
+  <section class="landing-section border-top bg-white">
+    <div class="container">
+      <h2 class="h4 text-center text-primary mb-4">Built for</h2>
+      <div class="row g-3 justify-content-center text-center">
+        <div class="col-md-4">
+          <div class="p-3 rounded bg-light">
+            <i class="bi bi-person-hearts text-primary fs-2"></i>
+            <p class="mb-0 mt-2 small fw-semibold">Home cooks</p>
+            <p class="mb-0 small text-muted">Who want to digitize recipe cards and clippings</p>
+          </div>
+        </div>
+        <div class="col-md-4">
+          <div class="p-3 rounded bg-light">
+            <i class="bi bi-journal-bookmark text-primary fs-2"></i>
+            <p class="mb-0 mt-2 small fw-semibold">Recipe Collectors</p>
+            <p class="mb-0 small text-muted">Who need one place to store and find recipes</p>
+          </div>
+        </div>
+        <div class="col-md-4">
+          <div class="p-3 rounded bg-light">
+            <i class="bi bi-phone-camera text-primary fs-2"></i>
+            <p class="mb-0 mt-2 small fw-semibold">Anyone With a Digital Device</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- How it works / Features and Benefits -->
+  <section class="landing-section border-top">
+    <div class="container">
+      <h2 class="h4 text-center text-primary mb-4">How it Works</h2>
+      <div class="row g-4">
+        <div class="col-md-4">
+          <div class="card landing-feature-card shadow-sm h-100">
+            <div class="card-body text-center p-4">
+              <span class="rounded-circle bg-primary bg-opacity-10 d-inline-flex align-items-center justify-content-center mb-3" style="width: 4rem; height: 4rem;">
+                <i class="bi bi-camera-fill text-primary fs-3"></i>
+              </span>
+              <h3 class="h6 fw-bold">1. Upload a Photo</h3>
+              <p class="small text-muted mb-0">Take a picture of a recipe (card, book, or screen) or choose a screenshot. We accept common image formats.</p>
+            </div>
+          </div>
+        </div>
+        <div class="col-md-4">
+          <div class="card landing-feature-card shadow-sm h-100">
+            <div class="card-body text-center p-4">
+              <span class="rounded-circle bg-primary bg-opacity-10 d-inline-flex align-items-center justify-content-center mb-3" style="width: 4rem; height: 4rem;">
+                <i class="bi bi-cpu text-primary fs-3"></i>
+              </span>
+              <h3 class="h6 fw-bold">2. We Parse It</h3>
+              <p class="small text-muted mb-0">Our system extracts the recipe title, ingredients (with quantities and units), and step-by-step instructions automatically.</p>
+            </div>
+          </div>
+        </div>
+        <div class="col-md-4">
+          <div class="card landing-feature-card shadow-sm h-100">
+            <div class="card-body text-center p-4">
+              <span class="rounded-circle bg-primary bg-opacity-10 d-inline-flex align-items-center justify-content-center mb-3" style="width: 4rem; height: 4rem;">
+                <i class="bi bi-folder-check text-primary fs-3"></i>
+              </span>
+              <h3 class="h6 fw-bold">3. Save and Use</h3>
+              <p class="small text-muted mb-0">Recipes are stored in your account, making it easy to upload and store- so you can get back to cooking!</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Final CTA -->
+  <section class="landing-cta-section border-top bg-primary bg-opacity-10 text-center">
+    <div class="container">
+      <h2 class="h4 text-primary mb-2">Ready to Organize your Recipes?</h2>
+      <p class="text-muted mb-4">Create a free account and upload your first recipe in seconds.</p>
+      <%= link_to "Sign up free", new_user_registration_path, class: "btn btn-primary btn-lg px-4" %>
+    </div>
+  </section>
 </div>

@@ -46,7 +46,7 @@
 - [ x] Non-logged-in users see landing page at `/`
 - [ x] Logged-in users redirect from `/` to `/recipes`
 - [x ] All CTA buttons link correctly
-- [ ] Navigation works (Sign Up, Sign In)
+- [ x] Navigation works (Sign Up, Sign In)
 - [ x] Responsive on mobile/tablet/desktop
 - [ x] Features section displays correctly
 
@@ -102,7 +102,7 @@
 - [x ] All steps listed in order (1, 2, 3...)
 - [ x] "View Original File" link works
 - [ x] Edit and Delete buttons visible
-- [ ] Breadcrumbs navigation works
+- [ x] Breadcrumbs navigation works
 
 ### Edit Recipe
 
@@ -137,7 +137,7 @@
 ## 6. User Profile Tests
 
 - [x ] Profile page shows user email
-- x[ ] Can edit preferred units
+- [ x] Can edit preferred units
 - [x ] Changes save successfully
 - [x ] Preferred units reflected in new recipe parsing
 
@@ -183,9 +183,9 @@
 
 ### Desktop (1200px+ width)
 
-- [ ] Full layout displays
-- [ ] Navigation inline
-- [ ] Recipe grid (3 columns)
+- [ x] Full layout displays
+- [ x] Navigation inline
+- [ x] Recipe grid (3 columns)
 
 ---
 
@@ -203,7 +203,7 @@
 - [ ] Simultaneous uploads from same user
 - [ x] Poor network connection (slow upload)
 - [ x] Session timeout during upload
-- [ ] Duplicate recipe titles
+- [x ] Duplicate recipe titles
 
 ---
 

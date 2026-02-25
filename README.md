@@ -81,6 +81,8 @@ Add (development/test can use separate credentials if needed):
 ### Verifying OpenAI
 
 Use the log tester script to confirm your API key and parser setup.
+Sample Log:
+![alt text](<docs/Screenshot 2026-02-24 at 7.18.17 PM.png>)
 
 1. **Open the Rails console**
    ```bash
@@ -110,8 +112,8 @@ Parse confirmation emails are sent after a recipe is created or re-parsed. In de
 
 1. Set `config.action_mailer.default_url_options = { host: "your-production-host.com" }` in `config/environments/production.rb` (and use HTTPS if applicable).
 2. Configure SMTP (or another delivery method): uncomment and set `config.action_mailer.smtp_settings` in production.rb, or use credentials (e.g. `smtp:` with `user_name`, `password`, `address`, `port`). Many hosts (e.g. Render, Heroku) provide SMTP add-ons or env vars for this.
+3. Without SMTP in production, emails will not be sent; the app will still work and jobs will enqueue.
 
-**Without SMTP in production, emails will not be sent; the app will still work and jobs will enqueue.**
 ---
 
 ## Contributing
@@ -137,10 +139,6 @@ Parse confirmation emails are sent after a recipe is created or re-parsed. In de
 ---
 
 ## Entity Relationship Diagram
-### First Iteration
-<img width="696" height="532" alt="Recipe Parser- ERD" src="https://github.com/user-attachments/assets/825d08ce-8ca3-41fb-a2e4-d94a4b64a998" />
-
-### Final Iteration 
 ![alt text](image.png)
 
 ---

@@ -2,7 +2,7 @@
 
 <div class="card shadow-sm" style="max-width: 32rem;">
   <div class="card-body">
-    <p class="text-muted mb-3">Choose a photo of a recipe (screenshot or photo). We'll extract the title, ingredients, and steps.</p>
+    <p class="text-muted mb-3">Choose a photo of a recipe (screenshot or photo). We'll extract the title, ingredients, and steps. Use jpg,png,heic, or heif</p>
     <%= form_with url: recipes_path, method: :post, multipart: true, data: { controller: "file-size", file_size_max_mb_value: "10" } do |f| %>
       <div class="mb-3">
         <%= f.file_field :recipe_file, accept: "image/*", required: true, class: "form-control", data: { file_size_target: "input" } %>
