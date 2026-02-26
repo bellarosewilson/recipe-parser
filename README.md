@@ -1,6 +1,6 @@
 # Recipe Manager
 
-**Upload a photo or screenshot (jpg,png,heic,heif) of your recipe, Recipe Manager will parse the ingredients, units, and steps.**
+**Is an image parser that allows home cooks to upload a photo or screenshot (jpg,png,heic,heif) of a recipe- Recipe Manager will parse the ingredients, units, and steps.**
 
 ---
 
