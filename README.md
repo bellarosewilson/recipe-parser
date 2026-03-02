@@ -1,23 +1,28 @@
 # Recipe Manager
 
-**Upload a photo or screenshot (jpg,png,heic,heif) of your recipe, Recipe Manager will parse the ingredients, units, and steps.**
+**Is an image parser that allows home cooks to upload a photo or screenshot of a recipe- Recipe Manager will parse the ingredients, units, and steps.**
 
 ---
 
 ## Table of contents
 
-- [Setup & installation](#setup--installation)
+- [Setup & Installation](#setup--installation)
 - [Configuration](#configuration)
-- [Entity relationship diagram](#entity-relationship-diagram)
 - [Contributing](#contributing)
 - [Troubleshooting & FAQ](#troubleshooting--faq)
+- [Entity Relationship Diagram](#entity-relationship-diagram)
+- [Project Board](#project-board)
 - [License](#license)
+
 
 ---
 
 ## Setup & installation
 
 Follow these steps so a new developer can run the project locally without external help.
+
+### Accepted Image Types
+- (jpg,png,heic,heif) 
 
 ### Prerequisites
 
@@ -59,7 +64,7 @@ Follow these steps so a new developer can run the project locally without extern
 
 ### Rails credentials
 
-Sensitive keys are stored via Rails credentials. Edit with:
+Sensitive keys are stored via Rails credentials. You will need your own AWS S3 Credentials and OpenAI API Key. Ensure correct bucket is being utilized.  Edit with:
 
 ```bash
 EDITOR="code --wait" bin/rails credentials:edit
@@ -81,8 +86,9 @@ Add (development/test can use separate credentials if needed):
 ### Verifying OpenAI
 
 Use the log tester script to confirm your API key and parser setup.
-Sample Log:
-![alt text](<docs/Screenshot 2026-02-24 at 7.18.17 PM.png>)
+Sample Log (add the screenshot to `docs/` so it displays when the repo is cloned):
+
+![OpenAI Verification Log](docs/openai-verification-log.png)
 
 1. **Open the Rails console**
    ```bash
@@ -138,17 +144,11 @@ Parse confirmation emails are sent after a recipe is created or re-parsed. In de
 
 ---
 
-## Entity Relationship Diagram
-
-![alt text](docs/erdimage.png)
-
----
-
 ## Troubleshooting & FAQ
 
 ### "Parse Failing on Deployment" (e.g. No Chat GPT 4o Model / out of memory)
 
-- **Free tier (512MB):** The app defaults to **gpt-4o-mini** for the recipe parser so it fits in Render’s free tier. Parsing should work without changes.
+- **Free tier (512MB):** The app defaults to **gpt-4o-mini** for the recipe parser so it fits in Render's free tier. Parsing should work without changes.
 - **Optional:** Set env `OPENAI_PARSER_MODEL=gpt-4o-mini` on Render to make this explicit.
 - **If you still hit memory limits:** Reduce upload size (images over 2MB are auto-resized before sending to OpenAI). Or move to a **paid Render plan** (e.g. Starter with more RAM) and then you can set `OPENAI_PARSER_MODEL=gpt-4o` for the full vision model. Local development is not limited by 512MB.
 
@@ -179,7 +179,15 @@ Parse confirmation emails are sent after a recipe is created or re-parsed. In de
 - Run locally: `bundle exec rubocop` and `bundle exec rspec`. Fix any new offenses or failing specs before pushing.
 
 ---
+## Entity Relationship Diagram
 
+![Entity Relationship Diagram](docs/erdimage.png)
+
+---
+## Project Board
+[View Project Board on GitHub](https://github.com/users/bellarosewilson/projects/1/views/1)
+
+---
 ## License
 
 All files are covered by the MIT license. See [LICENSE.txt](LICENSE.txt).
