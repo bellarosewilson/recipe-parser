@@ -139,7 +139,8 @@ Parse confirmation emails are sent after a recipe is created or re-parsed. In de
 ---
 
 ## Entity Relationship Diagram
-![alt text](image.png)
+
+![alt text](docs/erdimage.png)
 
 ---
 
