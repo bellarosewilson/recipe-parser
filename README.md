@@ -87,7 +87,7 @@ Add (development/test can use separate credentials if needed):
 
 Use the log tester script to confirm your API key and parser setup.
 Sample Log:
-![alt text](<docs/Screenshot 2026-02-24 at 7.18.17 PM.png>)
+<img src="docs/openai-verification-log.png" alt="OpenAI Verification Log" width="600">
 
 1. **Open the Rails console**
    ```bash
