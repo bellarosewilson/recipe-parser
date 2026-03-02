@@ -1,21 +1,24 @@
 class RecipesController < ApplicationController
   def index
-    @q = Recipe.ransack(params[:q])
+    @q = policy_scope(Recipe).ransack(params[:q])
     @list_of_recipes = @q.result.recent.includes(:author).page(params[:page]).per(12)
     render template: "recipe_templates/index"
   end
 
   def show
     @the_recipe = Recipe.includes(:author, :recipe_ingredients, :steps).find(params[:id])
+    authorize @the_recipe
     @can_reparse_recipe = @the_recipe.original_image.attached? && (respond_to?(:current_user) && current_user == @the_recipe.author)
     render template: "recipe_templates/show"
   end
 
   def new
+    authorize Recipe.new
     render template: "recipe_templates/new"
   end
 
   def create
+    authorize Recipe.new
     result = Recipes::CreateFromImageService.call(
       uploaded_file: params[:recipe_file],
       author: recipe_author
@@ -26,6 +29,7 @@ class RecipesController < ApplicationController
 
   def parse
     @recipe = Recipe.find(params[:id])
+    authorize @recipe
     if @recipe.parse_original_image(preferred_units: recipe_author.preferred_units)
       RecipeMailer.parse_confirmation(@recipe, recipe_author).deliver_later
       broadcast_recipe_event(@recipe, "parsed")
@@ -37,6 +41,7 @@ class RecipesController < ApplicationController
 
   def update
     @the_recipe = Recipe.find(params[:id])
+    authorize @the_recipe
     if @the_recipe.update(recipe_params)
       broadcast_recipe_event(@the_recipe, "updated", payload: recipe_json(@the_recipe))
       respond_to do |format|
@@ -53,6 +58,7 @@ class RecipesController < ApplicationController
 
   def destroy
     @the_recipe = Recipe.find(params[:id])
+    authorize @the_recipe
     @the_recipe.destroy
     redirect_to recipes_path, notice: "Recipe deleted successfully."
   end
