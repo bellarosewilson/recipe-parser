@@ -8,6 +8,7 @@
 
 - [Setup & Installation](#setup--installation)
 - [Configuration](#configuration)
+- [API Documentation](#api-documentation)
 - [Contributing](#contributing)
 - [Troubleshooting & FAQ](#troubleshooting--faq)
 - [Entity Relationship Diagram](#entity-relationship-diagram)
@@ -86,7 +87,7 @@ Add (development/test can use separate credentials if needed):
 ### Verifying OpenAI
 
 Use the log tester script to confirm your API key and parser setup.
-Sample Log (add the screenshot to `docs/` so it displays when the repo is cloned):
+Sample Log: 
 
 ![OpenAI Verification Log](docs/openai-verification-log.png)
 
@@ -119,6 +120,54 @@ Parse confirmation emails are sent after a recipe is created or re-parsed. In de
 1. Set `config.action_mailer.default_url_options = { host: "your-production-host.com" }` in `config/environments/production.rb` (and use HTTPS if applicable).
 2. Configure SMTP (or another delivery method): uncomment and set `config.action_mailer.smtp_settings` in production.rb, or use credentials (e.g. `smtp:` with `user_name`, `password`, `address`, `port`). Many hosts (e.g. Render, Heroku) provide SMTP add-ons or env vars for this.
 3. Without SMTP in production, emails will not be sent; the app will still work and jobs will enqueue.
+
+---
+
+## API Documentation
+
+The app exposes a JSON API for updating recipes. All API requests require an authenticated session (sign in via the web app first; cookies are used for authentication).
+
+### Update a recipe
+
+**Endpoint:** `PATCH /recipes/:id`
+
+**Authentication:** Required. Use the same session cookie as the web app (e.g. after signing in in the browser, or send the session cookie with your request).
+
+**Request headers:**
+
+- `Accept: application/json`
+- `Content-Type: application/x-www-form-urlencoded`
+- `X-CSRF-Token: <csrf_token>` (use the value from the page or from a prior response)
+
+**Request body (form-encoded):**
+
+| Parameter           | Type   | Required | Description      |
+|--------------------|--------|----------|------------------|
+| `recipe[title]`    | string | Yes      | Recipe title     |
+| `recipe[source_url]` | string | No     | Source URL       |
+| `authenticity_token` | string | Yes   | Rails CSRF token |
+
+**Success response:** `200 OK`
+
+```json
+{
+  "recipe": {
+    "id": 1,
+    "title": "Chocolate Chip Cookies",
+    "source_url": "https://example.com/recipe"
+  }
+}
+```
+
+**Validation error response:** `422 Unprocessable Entity`
+
+```json
+{
+  "errors": ["Title can't be blank"]
+}
+```
+
+**Authorization:** The authenticated user must be the recipe author. Otherwise the server responds with a redirect or error (e.g. "You are not authorized to perform this action.").
 
 ---
 
