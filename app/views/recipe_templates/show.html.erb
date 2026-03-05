@@ -10,7 +10,9 @@
   <h1 class="h3 mb-0" id="recipe_title_display"><%= @the_recipe.title %></h1>
   <div>
     <%= link_to "Back to List", recipes_path, class: "btn btn-outline-secondary btn-sm" %>
-    <%= button_to "Delete Recipe", recipe_path(@the_recipe), method: :delete, class: "btn btn-outline-danger btn-sm", data: { turbo_confirm: "Delete this Recipe?" } %>
+    <% if policy(@the_recipe).destroy? %>
+      <%= button_to "Delete Recipe", recipe_path(@the_recipe), method: :delete, class: "btn btn-outline-danger btn-sm", data: { turbo_confirm: "Delete this Recipe?" } %>
+    <% end %>
   </div>
 </div>
 
@@ -72,13 +74,13 @@
             <%= f.label :recipe_ingredients, "Ingredients", class: "form-label" %>
             <div data-nested-form-target="ingredientContainer">
               <%= f.fields_for :recipe_ingredients do |ing_f| %>
-                <%= render "recipe_templates/ingredient_fields", f: ing_f %>
+                <%= render "ingredient_fields", f: ing_f %>
               <% end %>
             </div>
             <button type="button" class="btn btn-outline-secondary btn-sm mt-1" data-action="click->nested-form#addIngredient">+ Add Ingredient</button>
             <template data-nested-form-target="ingredientTemplate">
               <%= f.fields_for :recipe_ingredients, Ingredient.new, child_index: "NEW_INGREDIENT_INDEX" do |ing_f| %>
-                <%= render "recipe_templates/ingredient_fields", f: ing_f %>
+                <%= render "ingredient_fields", f: ing_f %>
               <% end %>
             </template>
           </div>
@@ -87,13 +89,13 @@
             <%= f.label :steps, "Steps", class: "form-label" %>
             <div data-nested-form-target="stepContainer">
               <%= f.fields_for :steps do |step_f| %>
-                <%= render "recipe_templates/step_fields", f: step_f %>
+                <%= render "step_fields", f: step_f %>
               <% end %>
             </div>
             <button type="button" class="btn btn-outline-secondary btn-sm mt-1" data-action="click->nested-form#addStep">+ Add Step</button>
             <template data-nested-form-target="stepTemplate">
               <%= f.fields_for :steps, Step.new, child_index: "NEW_STEP_INDEX" do |step_f| %>
-                <%= render "recipe_templates/step_fields", f: step_f %>
+                <%= render "step_fields", f: step_f %>
               <% end %>
             </template>
           </div>
