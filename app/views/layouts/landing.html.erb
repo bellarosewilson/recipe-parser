@@ -25,6 +25,18 @@
 
     <%= stylesheet_link_tag "application", "data-turbo-track": "reload" %>
     <%= javascript_importmap_tags %>
+     <!-- Manual OverRide if Application.CSS Fails 2 Load  -->
+    <style>
+      :root { --bs-primary: #6f42c1; --bs-primary-rgb: 111, 66, 193; }
+      body { font-family: "Plus Jakarta Sans", -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif; background-color: #f5f3f8 !important; }
+      .navbar.bg-primary, .bg-primary { background-color: #6f42c1 !important; }
+      .btn-primary { background-color: #6f42c1 !important; border-color: #6f42c1 !important; }
+      .btn-primary:hover { background-color: #5a32a3 !important; border-color: #522d94 !important; }
+      .btn-outline-primary { color: #6f42c1 !important; border-color: #6f42c1 !important; }
+      .btn-outline-primary:hover { background-color: #6f42c1 !important; color: #fff !important; }
+      .text-primary { color: #6f42c1 !important; }
+      .link-primary { color: #6f42c1 !important; }
+    </style>
   </head>
 
   <body class="bg-light min-vh-100">
