@@ -4,14 +4,19 @@
   <%= tag.meta property: "og:title", content: @the_recipe.title %>
   <%= tag.meta property: "og:description", content: "#{@the_recipe.title} — Recipe with #{@the_recipe.recipe_ingredients.size} ingredients and #{@the_recipe.steps.size} steps." %>
   <%= tag.meta property: "og:type", content: "website" %>
+  <style>
+    .edit-recipe-toggle { cursor: pointer; }
+    .edit-recipe-toggle .chevron { display: inline-block; transition: transform 0.2s ease; }
+    .edit-recipe-toggle[aria-expanded="true"] .chevron { transform: rotate(180deg); }
+  </style>
 <% end %>
 
 <div class="d-flex justify-content-between align-items-center mb-4" data-controller="recipe-channel" data-recipe-channel-recipe-id-value="<%= @the_recipe.id %>">
   <h1 class="h3 mb-0" id="recipe_title_display"><%= @the_recipe.title %></h1>
-  <div>
+  <div class="d-flex flex-wrap gap-2">
     <%= link_to "Back to List", recipes_path, class: "btn btn-outline-secondary btn-sm" %>
     <% if policy(@the_recipe).destroy? %>
-      <%= button_to "Delete Recipe", recipe_path(@the_recipe), method: :delete, class: "btn btn-outline-danger btn-sm", data: { turbo_confirm: "Delete this Recipe?" } %>
+      <%= button_to "Delete Recipe", recipe_path(@the_recipe), method: :delete, form: { class: "d-inline mb-0" }, class: "btn btn-outline-danger btn-sm", data: { turbo_confirm: "Delete this Recipe?" } %>
     <% end %>
   </div>
 </div>
@@ -57,10 +62,12 @@
 
   <div class="col-lg-4">
     <% if policy(@the_recipe).update? %>
-    <div class="card shadow-sm sticky-top mb-4" style="top: 1rem;">
-      <div class="card-header bg-white">
+    <div class="card shadow-sm sticky-top mb-4" style="top: 1rem;" data-controller="collapse-close">
+      <div class="card-header bg-white edit-recipe-toggle d-flex justify-content-between align-items-center py-2" data-bs-toggle="collapse" data-bs-target="#editRecipeCollapse" role="button" aria-expanded="false" aria-controls="editRecipeCollapse">
         <h2 class="h6 mb-0">Edit Recipe</h2>
+        <span class="chevron text-muted small" aria-hidden="true">&#9660;</span>
       </div>
+      <div class="collapse" id="editRecipeCollapse" data-collapse-close-target="collapse">
       <div class="card-body" data-controller="nested-form">
         <%= form_with model: @the_recipe, url: recipe_path(@the_recipe), method: :patch do |f| %>
           <div class="mb-3">
@@ -103,7 +110,9 @@
           </div>
 
           <%= f.submit "Update Recipe", class: "btn btn-primary w-100" %>
+          <button type="button" class="btn btn-link btn-sm w-100 mt-2 text-muted text-decoration-none" data-action="click->collapse-close#close">&#9650; Close</button>
         <% end %>
+      </div>
       </div>
     </div>
     <% end %>

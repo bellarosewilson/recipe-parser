@@ -10,7 +10,7 @@
           <%= link_to "All Recipes", recipes_path, class: "nav-link text-white" %>
           <%= link_to "Add Recipe", new_recipe_path, class: "nav-link text-white" %>
           <%= link_to "Edit Account", edit_registration_path(:user), class: "nav-link text-white" %>
-          <%= button_to "Sign Out", destroy_user_session_path, method: :delete, form_class: "d-inline", class: "nav-link text-white border-0 p-0 bg-transparent" %>
+          <%= button_to "Sign Out", destroy_user_session_path, method: :delete, class: "btn btn-outline-light btn-sm ms-2" %>
         <% else %>
           <%= link_to "Sign In", new_user_session_path, class: "nav-link text-white" %>
           <%= link_to "Sign Up", new_user_registration_path, class: "nav-link text-white" %>
