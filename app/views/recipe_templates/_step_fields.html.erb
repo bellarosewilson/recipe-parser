@@ -1,0 +1,13 @@
+<div class="nested-fields row g-2 align-items-center mb-2" data-nested-form-target="stepRow">
+  <%= f.hidden_field :id if f.object.persisted? %>
+  <div class="col-1">
+    <%= f.text_field :position, class: "form-control form-control-sm", placeholder: "#", size: 3 %>
+  </div>
+  <div class="col">
+    <%= f.text_field :instruction, class: "form-control form-control-sm", placeholder: "Step instruction" %>
+  </div>
+  <div class="col-auto">
+    <%= f.check_box :_destroy, class: "form-check-input" %>
+    <%= f.label :_destroy, "Remove", class: "form-check-label small text-muted" %>
+  </div>
+</div>

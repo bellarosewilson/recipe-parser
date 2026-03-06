@@ -9,11 +9,11 @@
         <% if user_signed_in? %>
           <%= link_to "All Recipes", recipes_path, class: "nav-link text-white" %>
           <%= link_to "Add Recipe", new_recipe_path, class: "nav-link text-white" %>
-          <%= link_to "Edit account", edit_registration_path(:user), class: "nav-link text-white" %>
-          <%= button_to "Sign out", destroy_user_session_path, method: :delete, class: "nav-link text-white btn btn-link border-0 p-0 ms-1" %>
+          <%= link_to "Edit Account", edit_registration_path(:user), class: "nav-link text-white" %>
+          <%= button_to "Sign Out", destroy_user_session_path, method: :delete, class: "btn btn-outline-light btn-sm ms-2" %>
         <% else %>
-          <%= link_to "Sign in", new_user_session_path, class: "nav-link text-white" %>
-          <%= link_to "Sign up", new_user_registration_path, class: "nav-link text-white" %>
+          <%= link_to "Sign In", new_user_session_path, class: "nav-link text-white" %>
+          <%= link_to "Sign Up", new_user_registration_path, class: "nav-link text-white" %>
         <% end %>
       </div>
     </div>

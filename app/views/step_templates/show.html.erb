@@ -1,81 +1,55 @@
-<h1>
-  Step #<%= @the_step.id %> details
-</h1>
-
-<article>
+<div class="d-flex justify-content-between align-items-center mb-4">
+  <h1 class="h3 mb-0">Step #<%= @the_step.id %> Details</h1>
   <div>
-    <%= link_to "Go back", steps_path %>
+    <%= link_to "Go Back", steps_path, class: "btn btn-outline-secondary btn-sm" %>
+    <%= button_to "Delete Step", step_path(@the_step), method: :delete, class: "btn btn-outline-danger btn-sm", data: { turbo_confirm: "Delete this step?" } %>
   </div>
+</div>
 
-  <div>
-    <%= button_to "Delete step", step_path(@the_step), method: :delete, data: { turbo_confirm: "Delete this step?" } %>
+<div class="row">
+  <div class="col-lg-6">
+    <div class="card shadow-sm mb-4">
+      <div class="card-header bg-white">
+        <h2 class="h6 mb-0">Details</h2>
+      </div>
+      <div class="card-body">
+        <dl class="row mb-0">
+          <dt class="col-sm-4 text-muted">Recipe</dt>
+          <dd class="col-sm-8"><%= @the_step.recipe_id %></dd>
+          <dt class="col-sm-4 text-muted">Position</dt>
+          <dd class="col-sm-8"><%= @the_step.position %></dd>
+          <dt class="col-sm-4 text-muted">Instruction</dt>
+          <dd class="col-sm-8"><%= @the_step.instruction %></dd>
+          <dt class="col-sm-4 text-muted">Created</dt>
+          <dd class="col-sm-8"><%= time_ago_in_words(@the_step.created_at) %> ago</dd>
+          <dt class="col-sm-4 text-muted">Updated</dt>
+          <dd class="col-sm-8"><%= time_ago_in_words(@the_step.updated_at) %> ago</dd>
+        </dl>
+      </div>
+    </div>
   </div>
-  <dl>
-    <dt>
-      Recipe
-    </dt>
-    <dd>
-      <%= @the_step.recipe_id %>
-    </dd>
-
-    <dt>
-      Position
-    </dt>
-    <dd>
-      <%= @the_step.position %>
-    </dd>
-
-    <dt>
-      Instruction
-    </dt>
-    <dd>
-      <%= @the_step.instruction %>
-    </dd>
-
-    <dt>
-      Created at
-    </dt>
-    <dd>
-      <%= time_ago_in_words(@the_step.created_at) %> ago
-    </dd>
-
-    <dt>
-      Updated at
-    </dt>
-    <dd>
-      <%= time_ago_in_words(@the_step.updated_at) %> ago
-    </dd>
-  </dl>
-</article>
-
-<hr>
-
-
-<article>
-  <header>
-    <h2>
-      Edit step
-    </h2>
-  </header>
-
-  <%= form_with model: @the_step, url: step_path(@the_step), method: :patch do |f| %>
-    <div class="mb-3">
-      <%= f.label :recipe_id, "Recipe", class: "form-label" %>
-      <%= f.number_field :recipe_id, class: "form-control", required: true %>
+  <div class="col-lg-6">
+    <div class="card shadow-sm">
+      <div class="card-header bg-white">
+        <h2 class="h6 mb-0">Edit Step</h2>
+      </div>
+      <div class="card-body">
+        <%= form_with model: @the_step, url: step_path(@the_step), method: :patch do |f| %>
+          <div class="mb-3">
+            <%= f.label :recipe_id, "Recipe", class: "form-label" %>
+            <%= f.number_field :recipe_id, class: "form-control", required: true %>
+          </div>
+          <div class="mb-3">
+            <%= f.label :position, "Position", class: "form-label" %>
+            <%= f.text_field :position, class: "form-control", required: true %>
+          </div>
+          <div class="mb-3">
+            <%= f.label :instruction, "Instruction", class: "form-label" %>
+            <%= f.text_field :instruction, class: "form-control", required: true, maxlength: 2000 %>
+          </div>
+          <%= f.submit "Update Step", class: "btn btn-primary" %>
+        <% end %>
+      </div>
     </div>
-
-    <div class="mb-3">
-      <%= f.label :position, "Position", class: "form-label" %>
-      <%= f.text_field :position, class: "form-control", required: true %>
-    </div>
-
-    <div class="mb-3">
-      <%= f.label :instruction, "Instruction", class: "form-label" %>
-      <%= f.text_field :instruction, class: "form-control", required: true, maxlength: 2000 %>
-    </div>
-
-    <%= f.submit "Update step", class: "btn btn-primary" %>
-  <% end %>
-</article>
-
-<hr>
+  </div>
+</div>

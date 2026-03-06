@@ -70,7 +70,11 @@ class RecipesController < ApplicationController
   end
 
   def recipe_params
-    p = params.require(:recipe).permit(:title, :source_url)
+    p = params.require(:recipe).permit(
+      :title, :source_url,
+      recipe_ingredients_attributes: [ :id, :name, :amount, :unit, :_destroy ],
+      steps_attributes: [ :id, :instruction, :position, :_destroy ]
+    )
     p[:author_id] = recipe_author.id
     p
   end

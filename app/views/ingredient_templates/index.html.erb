@@ -1,51 +1,44 @@
-<h1>
-  List of all ingredients
-</h1>
+<h1 class="mb-4">List of All Ingredients</h1>
 
-<hr>
+<div class="card shadow-sm mb-4">
+  <div class="card-body">
+    <h2 class="h5 mb-3">Add a New Ingredient</h2>
+    <%= form_with url: ingredients_path, scope: :ingredient do |f| %>
+      <div class="row g-3">
+        <div class="col-md-3">
+          <%= f.label :recipe_id, "Recipe", class: "form-label" %>
+          <%= f.number_field :recipe_id, class: "form-control" %>
+        </div>
+        <div class="col-md-3">
+          <%= f.label :unit, "Unit", class: "form-label" %>
+          <%= f.text_field :unit, class: "form-control" %>
+        </div>
+        <div class="col-md-3">
+          <%= f.label :amount, "Amount", class: "form-label" %>
+          <%= f.text_field :amount, class: "form-control" %>
+        </div>
+        <div class="col-md-3">
+          <%= f.label :name, "Name", class: "form-label" %>
+          <%= f.text_field :name, class: "form-control" %>
+        </div>
+      </div>
+      <div class="mt-3">
+        <%= f.submit "Create Ingredient", class: "btn btn-primary" %>
+      </div>
+    <% end %>
+  </div>
+</div>
 
-<article>
-  <header>
-    <h2>
-      Add a new ingredient
-    </h2>
-  </header>
-
-  <%= form_with url: ingredients_path, scope: :ingredient do |f| %>
-    <div>
-      <%= f.label :recipe_id, "Recipe" %>
-      <%= f.number_field :recipe_id %>
-    </div>
-
-    <div>
-      <%= f.label :unit, "Unit" %>
-      <%= f.text_field :unit %>
-    </div>
-
-    <div>
-      <%= f.label :amount, "Amount" %>
-      <%= f.text_field :amount %>
-    </div>
-
-    <div>
-      <%= f.label :name, "Name" %>
-      <%= f.text_field :name %>
-    </div>
-
-    <%= f.submit "Create ingredient" %>
-  <% end %>
-</article>
-
-<hr>
-
-<article>
-  <ul>
+<div class="card shadow-sm">
+  <div class="card-header bg-white">
+    <h2 class="h6 mb-0">Your Ingredients</h2>
+  </div>
+  <ul class="list-group list-group-flush">
     <% @list_of_ingredients.each do |an_ingredient| %>
-      <li>
-        <%= link_to "Ingredient ##{an_ingredient.id}", ingredient_path(an_ingredient) %>
+      <li class="list-group-item d-flex justify-content-between align-items-center">
+        <span>Ingredient #<%= an_ingredient.id %></span>
+        <%= link_to "View", ingredient_path(an_ingredient), class: "btn btn-outline-primary btn-sm" %>
       </li>
     <% end %>
   </ul>
-</article>
-
-<hr>
+</div>
