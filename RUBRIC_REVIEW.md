@@ -5,7 +5,7 @@
 - Project Name: Recipe Manager
 - Reviewer Name: Claude, Ian Heraty, Adolfo Nava
 - Repository URL: <https://github.com/bellarosewilson/recipe-manager>
-- Feedback Pull Request URL: TODO
+- Feedback Pull Request URL: <https://github.com/bellarosewilson/recipe-manager/pull/36>
 
 ---
 
