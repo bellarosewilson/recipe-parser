@@ -2,8 +2,6 @@
 
 ## P0 — Critical (Security / Architecture / Broken Patterns)
 
-These block apprenticeship sign-off. Fix before anything else.
-
 ---
 
 ### P0-1: IngredientsController and StepsController have no authorization
