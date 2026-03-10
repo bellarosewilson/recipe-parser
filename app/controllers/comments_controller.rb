@@ -3,6 +3,7 @@
 class CommentsController < ApplicationController
   def create
     commentable = commentable_from_params
+    authorize (commentable.is_a?(Step) ? commentable.recipe : commentable), :show?
     @comment = commentable.comments.build(comment_params)
     @comment.user = current_user
 

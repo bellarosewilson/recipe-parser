@@ -33,9 +33,9 @@ class RecipesController < ApplicationController
     if @recipe.parse_original_image(preferred_units: recipe_author.preferred_units)
       RecipeMailer.parse_confirmation(@recipe, recipe_author).deliver_later
       broadcast_recipe_event(@recipe, "parsed")
-      redirect_to recipe_path(@recipe), notice: "Recipe parsed successfully from image."
+      redirect_to recipe_path(@recipe), notice: "Recipe Parsed Successfully from Image!"
     else
-      redirect_to recipe_path(@recipe), alert: "Could not parse recipe (no image attached?)."
+      redirect_to recipe_path(@recipe), alert: "Could Not Parse Recipe (No Image Attached?)."
     end
   end
 
@@ -43,9 +43,9 @@ class RecipesController < ApplicationController
     @the_recipe = Recipe.find(params[:id])
     authorize @the_recipe
     if @the_recipe.update(recipe_params)
-      broadcast_recipe_event(@the_recipe, "updated", payload: recipe_json(@the_recipe))
+      broadcast_recipe_event(@the_recipe, "Updated", payload: recipe_json(@the_recipe))
       respond_to do |format|
-        format.html { redirect_to recipe_path(@the_recipe), notice: "Recipe updated successfully." }
+        format.html { redirect_to recipe_path(@the_recipe), notice: "Recipe Updated Successfully." }
         format.json { render json: { recipe: recipe_json(@the_recipe) }, status: :ok }
       end
     else
@@ -60,13 +60,13 @@ class RecipesController < ApplicationController
     @the_recipe = Recipe.find(params[:id])
     authorize @the_recipe
     @the_recipe.destroy
-    redirect_to recipes_path, notice: "Recipe deleted successfully."
+    redirect_to recipes_path, notice: "Recipe Deleted Successfully."
   end
 
   private
 
   def recipe_author
-    (respond_to?(:current_user) && current_user) || User.first
+    current_user
   end
 
   def recipe_params
