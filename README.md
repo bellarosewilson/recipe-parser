@@ -1,6 +1,6 @@
 # Recipe Manager
 
-**Is an image parser that allows home cooks to upload a photo or screenshot of a recipe- Recipe Manager will parse the ingredients, units, and steps.**
+**Works as an image parser that allows home cooks to upload a photo or screenshot of a recipe- Recipe Manager will parse the ingredients, units, and steps.**
 
 ---
 
@@ -66,9 +66,11 @@ Follow these steps so a new developer can run the project locally without extern
 
 ## Configuration
 
+Sensitive keys are stored via Rails credentials. Please choose the method that works best for you.
+
 ### Rails credentials
 
-Sensitive keys are stored via Rails credentials. You will need your own AWS S3 Credentials and OpenAI API Key. Checkout these guides if needed, [FAQ for Guides to Setup Keys as New User](#how-do-i-get-my-own-aws-s3-and-openai-keys).
+You will need your own AWS S3 Credentials and OpenAI API Key. Checkout these guides if needed, [FAQ for Guides to Setup Keys as New User](#how-do-i-get-my-own-aws-s3-and-openai-keys).
 
 1. Edit with:
 
@@ -76,7 +78,8 @@ Sensitive keys are stored via Rails credentials. You will need your own AWS S3 C
 EDITOR="code --wait" bin/rails credentials:edit
 ```
 
-2. Add Keys
+2. Add Keys to Credentials
+
 (If needed select development, otherwise defaults to production)
 
 - **OpenAI** (required for recipe parsing):  
@@ -91,8 +94,9 @@ EDITOR="code --wait" bin/rails credentials:edit
 
 ### Verifying OpenAI
 
-3. Use the log tester script to confirm your API key and parser setup.
-   Sample Log:
+### Use the log tester script to confirm your API key and parser setup.
+
+Sample Log:
 
 ![OpenAI Verification Log](docs/openai-verification-log.png)
 
@@ -124,11 +128,13 @@ EDITOR="code --wait" bin/rails credentials:edit
 
 ### Email Notification (Configuration)
 
-Parse confirmation emails are sent after a recipe is created or re-parsed. In development, mail is logged (no SMTP). For production you need to configure delivery:
+**Parse confirmation emails** are sent after a recipe is created or re-parsed. **Devise emails** (sign-up confirmation, password reset, unlock) use the same mailer; in development both are logged (no SMTP).
+
+For production you need to configure delivery:
 
 1. Set `config.action_mailer.default_url_options = { host: "your-production-host.com" }` in `config/environments/production.rb` (and use HTTPS if applicable).
 2. Configure SMTP (or another delivery method): uncomment and set `config.action_mailer.smtp_settings` in production.rb, or use credentials (e.g. `smtp:` with `user_name`, `password`, `address`, `port`). Many hosts (e.g. Render, Heroku) provide SMTP add-ons or env vars for this.
-3. Without SMTP in production, emails will not be sent; the app will still work and jobs will enqueue.
+3. Without SMTP in production, emails will not be sent; the app will still work and jobs will enqueue. Emails will begin sending only after SMTP is enabled.
 
 ---
 
