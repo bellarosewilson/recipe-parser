@@ -1,7 +1,7 @@
 class RecipesController < ApplicationController
   def index
     @q = policy_scope(Recipe).ransack(params[:q])
-    @list_of_recipes = @q.result.recent.includes(:author).page(params[:page]).per(12)
+    @list_of_recipes = @q.result.recent.includes(:author).with_attached_original_image.page(params[:page]).per(12)
     render template: "recipe_templates/index"
   end
 
@@ -21,7 +21,7 @@ class RecipesController < ApplicationController
     authorize Recipe.new
     result = Recipes::CreateFromImageService.call(
       uploaded_file: params[:recipe_file],
-      author: recipe_author
+      author: recipe_author,
     )
     opts = result.notice.present? ? { notice: result.notice } : { alert: result.alert }
     redirect_to result.redirect_path, opts
@@ -33,9 +33,9 @@ class RecipesController < ApplicationController
     if @recipe.parse_original_image(preferred_units: recipe_author.preferred_units)
       RecipeMailer.parse_confirmation(@recipe, recipe_author).deliver_later
       broadcast_recipe_event(@recipe, "parsed")
-      redirect_to recipe_path(@recipe), notice: "Recipe Parsed Successfully from Image!"
+      redirect_to recipe_path(@recipe), notice: "Recipe parsed successfully from image."
     else
-      redirect_to recipe_path(@recipe), alert: "Could Not Parse Recipe (No Image Attached?)."
+      redirect_to recipe_path(@recipe), alert: "Could not parse recipe (no image attached?)."
     end
   end
 
@@ -43,9 +43,9 @@ class RecipesController < ApplicationController
     @the_recipe = Recipe.find(params[:id])
     authorize @the_recipe
     if @the_recipe.update(recipe_params)
-      broadcast_recipe_event(@the_recipe, "Updated", payload: recipe_json(@the_recipe))
+      broadcast_recipe_event(@the_recipe, "updated", payload: recipe_json(@the_recipe))
       respond_to do |format|
-        format.html { redirect_to recipe_path(@the_recipe), notice: "Recipe Updated Successfully." }
+        format.html { redirect_to recipe_path(@the_recipe), notice: "Recipe updated successfully." }
         format.json { render json: { recipe: recipe_json(@the_recipe) }, status: :ok }
       end
     else
@@ -60,7 +60,7 @@ class RecipesController < ApplicationController
     @the_recipe = Recipe.find(params[:id])
     authorize @the_recipe
     @the_recipe.destroy
-    redirect_to recipes_path, notice: "Recipe Deleted Successfully."
+    redirect_to recipes_path, notice: "Recipe deleted successfully."
   end
 
   private
@@ -73,7 +73,7 @@ class RecipesController < ApplicationController
     p = params.require(:recipe).permit(
       :title, :source_url,
       recipe_ingredients_attributes: [ :id, :name, :amount, :unit, :_destroy ],
-      steps_attributes: [ :id, :instruction, :position, :_destroy ]
+      steps_attributes: [ :id, :instruction, :position, :_destroy ],
     )
     p[:author_id] = recipe_author.id
     p

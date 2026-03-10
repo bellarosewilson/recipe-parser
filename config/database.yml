@@ -17,8 +17,8 @@ default: &default
   encoding: unicode
   # For details on connection pooling, see Rails configuration guide
   # https://guides.rubyonrails.org/configuring.html#database-pooling
+  # Pool must be >= Solid Queue threads (4) + Puma; 5 is required for production (Solid Queue in Puma).
   pool: <%= ENV.fetch("DB_POOL", 5) %>
-
 
 development:
   <<: *default
@@ -82,6 +82,8 @@ production:
   primary: &primary_production
     <<: *default
     url: <%= ENV["DATABASE_URL"] %>
+    # Explicit pool so Render free tier- setting it to 6 to prevent Solid Queue crashes
+    pool: <%= ENV.fetch("DB_POOL", 6) %>
   # Share the same database for cache, queue, and cable (saves connections/memory)
   cache:
     <<: *primary_production
