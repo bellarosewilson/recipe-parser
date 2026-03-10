@@ -37,7 +37,7 @@ Follow these steps so a new developer can run the project locally without extern
 
    ```bash
    git clone <repository-url>
-   cd recipe-parser
+   cd recipe-manager
    ```
 
 2. **Install dependencies**
