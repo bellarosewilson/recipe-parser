@@ -8,8 +8,9 @@ RSpec.describe "Recipes", type: :request do
       user = User.create!(
         email: "recipes_spec@example.com",
         password: "password123",
-        password_confirmation: "password123"
+        password_confirmation: "password123",
       )
+      user.confirm
       sign_in user
 
       get recipes_path
