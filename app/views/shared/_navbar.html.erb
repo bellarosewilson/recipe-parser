@@ -5,17 +5,29 @@
       <span class="navbar-toggler-icon"></span>
     </button>
     <div class="collapse navbar-collapse" id="navbarNav">
-      <div class="navbar-nav ms-auto">
+      <ul class="navbar-nav ms-auto flex-row gap-1 gap-lg-2 align-items-center">
         <% if user_signed_in? %>
-          <%= link_to "All Recipes", recipes_path, class: "nav-link text-white" %>
-          <%= link_to "Add Recipe", new_recipe_path, class: "nav-link text-white" %>
-          <%= link_to "Edit Account", edit_registration_path(:user), class: "nav-link text-white" %>
-          <%= button_to "Sign Out", destroy_user_session_path, method: :delete, class: "btn btn-outline-light btn-sm ms-2" %>
+          <li class="nav-item">
+            <%= link_to "All Recipes", recipes_path, class: "nav-link text-white py-2" %>
+          </li>
+          <li class="nav-item">
+            <%= link_to "Add Recipe", new_recipe_path, class: "nav-link text-white py-2" %>
+          </li>
+          <li class="nav-item">
+            <%= link_to "Edit Account", edit_registration_path(:user), class: "nav-link text-white py-2" %>
+          </li>
+          <li class="nav-item">
+            <%= button_to "Sign Out", destroy_user_session_path, method: :delete, form: { class: "d-inline" }, class: "btn btn-outline-light btn-sm" %>
+          </li>
         <% else %>
-          <%= link_to "Sign In", new_user_session_path, class: "nav-link text-white" %>
-          <%= link_to "Sign Up", new_user_registration_path, class: "nav-link text-white" %>
+          <li class="nav-item">
+            <%= link_to "Sign In", new_user_session_path, class: "nav-link text-white py-2" %>
+          </li>
+          <li class="nav-item">
+            <%= link_to "Sign Up", new_user_registration_path, class: "nav-link text-white py-2" %>
+          </li>
         <% end %>
-      </div>
+      </ul>
     </div>
   </div>
 </nav>

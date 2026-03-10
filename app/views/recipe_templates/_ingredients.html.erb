@@ -7,7 +7,7 @@
       <li class="list-group-item"><%= ingredient.name %><% if ingredient.amount.present? || ingredient.unit.present? %> — <%= [ingredient.amount, ingredient.unit].compact.join(" ") %><% end %></li>
     <% end %>
     <% if recipe.recipe_ingredients.none? %>
-      <li class="list-group-item text-muted">No ingredients yet.</li>
+      <li class="list-group-item text-muted">No Ingredients Yet.</li>
     <% end %>
   </ul>
 </div>
