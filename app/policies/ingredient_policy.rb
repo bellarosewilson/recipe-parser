@@ -1,4 +1,5 @@
 # frozen_string_literal: true
+
 class IngredientPolicy < ApplicationPolicy
   def show?
     user.present? && record.recipe && record.recipe.author_id == user.id
