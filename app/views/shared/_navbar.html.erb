@@ -5,6 +5,9 @@
       <span class="navbar-toggler-icon"></span>
     </button>
     <div class="collapse navbar-collapse" id="navbarNav">
+      <%# There's a small issue with the syntax here there is a lot of css tags here that might be confusing to adjust %>
+      <%# For starters Navbars whether is showing or hiding should be based on the screen width of the window (mobile or desktop window) instead of hiding everytime %>
+      <%# You should list these items vertically instead to take advantage of the available space and leave little mistakes for people who are not familiar with using electronic devices because of how this service intended audience could be for everyone and should be designed for everyone %>
       <ul class="navbar-nav ms-auto flex-row gap-1 gap-lg-2 align-items-center">
         <% if user_signed_in? %>
           <li class="nav-item">
